@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import { set_sidebar } from "./utils/auto_sidebar.mjs"; // 改成自己的路径
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base:'/documents-site/'
   title: "沉浸式学习资料库",
   description: "一站式学习",
   themeConfig: {
