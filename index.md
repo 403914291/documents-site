@@ -79,7 +79,7 @@ onMounted(() => {
     renderer: 'svg',       // 矢量渲染，清晰度高
     loop: true,            // 循环播放
     autoplay: true,        // 自动播放
-    path: '/documents-site/lottie/work2.json' // 动画JSON路径（确保在docs/public/lottie/下）
+    path: '/lottie/work2.json' // 动画JSON路径（确保在docs/public/lottie/下）
   });
 });
 </script>
