@@ -80,7 +80,7 @@ find ./ -type f -name "*.txt" | xargs grep -li "字符串"
 free -m
 ```
 
-![image-20250807140544807](C:\Users\李勇\AppData\Roaming\Typora\typora-user-images\image-20250807140544807.png)
+![image-20250807140544807](./images/image-20250807140544807.png)
 
 当前内存剩余570M左右，另外buff/cache是1.3G，根据上面说的现在真正的剩余内存应该是1.8G左右，
 
@@ -98,7 +98,7 @@ echo 1 > /proc/sys/vm/drop_caches
 
 执行完之后，再次查看内存剩余：
 
-![image-20250807140705726](C:\Users\李勇\AppData\Roaming\Typora\typora-user-images\image-20250807140705726.png)
+![image-20250807140705726](./images/image-20250807140705726.png)
 
 会发现内存被释放了，可用内存确实变为1.8G左右
 

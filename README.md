@@ -35,3 +35,12 @@ git remote add origin https://github.com/403914291/documents-site.git
 git branch -M main
 git push -u origin main
 ```
+
+
+
+
+
+设置工作流程
+
+vitepress官方文档：https://vitepress.dev/guide/deploy#github-pages
+
