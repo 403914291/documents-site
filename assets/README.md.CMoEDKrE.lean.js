@@ -1,1 +1,0 @@
-import{_ as e,c as n,o as s,ag as t}from"./chunks/framework.B0bJk-gD.js";const m=JSON.parse('{"title":"站点介绍","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),i={name:"README.md"};function o(p,a,r,l,c,d){return s(),n("div",null,[...a[0]||(a[0]=[t("",10)])])}const u=e(i,[["render",o]]);export{m as __pageData,u as default};
