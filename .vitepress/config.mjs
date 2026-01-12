@@ -3,7 +3,7 @@ import { set_sidebar } from "./utils/auto_sidebar.mjs"; // 改成自己的路径
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   // 设置站点根路径 1：自定义域名时可以不设置或者 根/ 2：直接发布github pages时需要设置仓库名字/documents-site
-  base: '/',
+  // base: '/',
   title: "沉浸式学习资料库",
   description: "一站式学习",
   themeConfig: {
