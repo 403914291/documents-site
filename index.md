@@ -61,8 +61,8 @@ This is a details block.
   /* 基于hero容器绝对定位 */
   position: absolute;
   right: 10%;  /* 距离右侧的间距，可调整 */
-  top: 10%;   /* 垂直居中 */
-  transform: translateY(-210%);
+  top: 40%;   /* 垂直居中 */
+  transform: translateY(-180%);
   width: 350px;  /* 动画尺寸，和你的需求匹配 */
   height: 350px;"></div>
 
