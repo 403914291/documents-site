@@ -19,15 +19,16 @@ hero:
  
 
 
-features: 
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+features:
+  - title: Claude AI 助手
+    icon:
+      src: /svg/Claude.svg
+    link: /AI_docs/Claude-Code
+    details: Anthropic 推出的智能 AI 助手，擅长代码编写、问题解答和学习辅导
+  - title: OpenClaw 开源工具
+    icon:
+      src: /svg/openclaw.svg
+    details: 开源技术栈，提供灵活可扩展的开发框架和社区支持
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
   - title: Feature C

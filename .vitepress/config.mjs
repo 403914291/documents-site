@@ -20,8 +20,11 @@ export default defineConfig({
       { text: 'AI沉浸式学习',  items:[
         {text:'AI学习资料',link:'markdown-examples'},
         {text:'AI实战项目',link:'/AI_docs'},
-        {text:'AI视频教程',link:'/videos/'}
+        {text:'AI视频教程',link:'/videos/'},
+        {text:'AI基础',link:'/AI_basics/'}
       ] },
+      {text:'Claude Code',link:'/AI_docs/Claude-Code'},
+       {text:'openClaw',link:''},
       {text:'示例',link:'www.googo.com'}
     ],
     
@@ -47,6 +50,7 @@ export default defineConfig({
     sidebar: {
       "/pythond_docs": set_sidebar("/python_docs"),
       "/AI_docs": set_sidebar("/AI_docs"),
+      '/AI_basics/': set_sidebar('/AI_basics')
     },
 
     socialLinks: [
