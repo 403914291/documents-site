@@ -24,7 +24,7 @@ export default defineConfig({
         {text:'AI基础',link:'/AI_basics/'}
       ] },
       {text:'Claude Code',link:'/AI_docs/Claude-Code'},
-       {text:'openClaw',link:''},
+       {text:'openClaw',link:'/OpenClaw/'},
       {text:'示例',link:'www.googo.com'}
     ],
     
@@ -50,7 +50,8 @@ export default defineConfig({
     sidebar: {
       "/pythond_docs": set_sidebar("/python_docs"),
       "/AI_docs": set_sidebar("/AI_docs"),
-      '/AI_basics/': set_sidebar('/AI_basics')
+      '/AI_basics/': set_sidebar('/AI_basics'),
+      '/OpenClaw/': set_sidebar('/OpenClaw')
     },
 
     socialLinks: [

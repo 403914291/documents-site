@@ -28,6 +28,7 @@ features:
   - title: OpenClaw 小龙虾
     icon:
       src: /svg/openclaw.svg
+    link: /OpenClaw/
     details: 开源技术栈，提供灵活可扩展的开发框架和社区支持
  
 ---
