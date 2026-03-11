@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-基于 VitePress 构建的静态文档站点，内容为 AI 和 Python 技术学习资料。
+基于 VitePress 构建的静态文档站点，内容为 AI、Python 和 OpenClaw 技术学习资料。
 
 ## 常用命令
 
@@ -24,10 +24,12 @@ npm run docs:preview
 ```
 ├── .vitepress/              # VitePress 配置
 │   ├── config.mjs           # 站点配置（导航、侧边栏等）
+│   ├── theme/               # 自定义主题
 │   └── utils/
 │       └── auto_sidebar.mjs # 自动生成侧边栏工具
 ├── AI_docs/                 # AI 学习资料
 ├── AI_basics/               # AI 基础知识
+├── OpenClaw/                # OpenClaw 教程
 ├── python_docs/             # Python 学习资料
 ├── public/                  # 静态资源
 │   ├── lottie/              # Lottie 动画文件
@@ -57,3 +59,9 @@ npm run docs:preview
 - 每个内容分类有独立的 `index.md` 作为入口
 - 图片资源放在同级的 `assets/` 目录
 - Markdown 支持 VitePress 所有默认组件（tip/warning/danger 等）
+
+### base 路径配置
+- `config.mjs` 中的 `base` 配置项控制站点根路径
+- 自定义域名：使用 `'/'`
+- GitHub Pages：使用 `'/documents-site/'`
+- 当前配置：已注释，默认为 `'/'`
