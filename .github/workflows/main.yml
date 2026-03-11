@@ -33,3 +33,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./.vitepress/dist # 重点：VitePress 构建后的目录（适配你的项目结构）
+          force_orphan: true  
