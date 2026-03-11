@@ -4,7 +4,7 @@ on:
     branches: [ main ] # 推送到 main 分支时自动部署
 # 新增：授予部署 Pages 的权限（关键）
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
   
