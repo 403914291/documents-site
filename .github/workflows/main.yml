@@ -19,7 +19,7 @@ jobs:
       - name: 配置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 匹配你本地的 Node 版本
+          node-version: '24' # 匹配你本地的 Node 版本
           cache: 'npm'
 
       - name: 安装依赖
