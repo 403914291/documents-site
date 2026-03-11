@@ -2,7 +2,16 @@ import { defineConfig } from 'vitepress'
 import { set_sidebar } from "./utils/auto_sidebar.mjs"; // 改成自己的路径
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  // 设置站点根路径 1：自定义域名时可以不设置或者 根/ 2：直接发布github pages时需要设置仓库名字/documents-site
+  /**
+   * base - 站点根路径配置
+   *
+   * 使用场景：
+   * 1. 自定义域名部署：使用 '/'（根路径）
+   * 2. GitHub Pages 部署：使用 '/仓库名/'，例如 '/documents-site/'
+   * 3. Vercel/Netlify：通常使用 '/' 即可
+   *
+   * 注意：路径必须以 / 开头和结尾
+   */
   base: '/',
   title: "沉浸式学习资料库",
   description: "一站式学习",
@@ -17,20 +26,20 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
-      { text: 'AI沉浸式学习',  items:[
-        {text:'AI学习资料',link:'markdown-examples'},
-        {text:'AI实战项目',link:'/AI_docs'},
-        {text:'AI视频教程',link:'/videos/'},
-        {text:'AI基础',link:'/AI_basics/'}
+      { text: 'AI 沉浸式学习',  items:[
+        {text:'AI 学习资料',link:'markdown-examples'},
+        {text:'AI 实战项目',link:'/AI_docs'},
+        {text:'AI 视频教程',link:'/videos/'},
+        {text:'AI 基础',link:'/AI_basics/'}
       ] },
       {text:'Claude Code',link:'/AI_docs/Claude-Code'},
        {text:'openClaw',link:'/OpenClaw/'},
       {text:'示例',link:'www.googo.com'}
     ],
-    
+
     // sidebar: [
     //   {
-        
+
     //     text: '示例',
     //     items: [
     //       { text: 'Markdown 示例', link: '/markdown-examples' },
@@ -45,7 +54,7 @@ export default defineConfig({
     //     ]
     //   },
     //   {text:'学习一：环境搭建',link:'markdown-examples'},
-   
+
     // ],
     sidebar: {
       "/pythond_docs": set_sidebar("/python_docs"),
