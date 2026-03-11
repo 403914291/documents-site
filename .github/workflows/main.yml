@@ -2,7 +2,7 @@ name: 部署 documents-site 到 GitHub Pages
 on:
   push:
     branches: [ main ] # 推送到 main 分支时自动部署
-# 新增：授予部署 Pages 的权限（关键）
+# 新增：授予部署 Pages 的权限
 permissions:
   contents: write
   pages: write
@@ -19,7 +19,7 @@ jobs:
       - name: 配置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 匹配你本地的 Node 版本（比如 18/20）
+          node-version: '20' # 匹配你本地的 Node 版本
           cache: 'npm'
 
       - name: 安装依赖
