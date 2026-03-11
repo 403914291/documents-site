@@ -12,7 +12,7 @@ export default defineConfig({
    *
    * 注意：路径必须以 / 开头和结尾
    */
-  base: '/',
+  // base: '/',
   title: "沉浸式学习资料库",
   description: "一站式学习",
   themeConfig: {
