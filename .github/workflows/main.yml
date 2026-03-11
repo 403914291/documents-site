@@ -1,8 +1,13 @@
-name: 部署 VitePress 到 GitHub Pages
+name: 部署 documents-site 到 GitHub Pages
 on:
   push:
-    branches: [ main ] # 推送到 main 分支时自动部署（你的主分支是 master 就改 master）
-
+    branches: [ main ] # 推送到 main 分支时自动部署
+# 新增：授予部署 Pages 的权限（关键）
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
