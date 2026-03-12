@@ -28,7 +28,7 @@ jobs:
       - name: 构建 VitePress
         run: npm run docs:build
 
-      - name: 复制 CNAME（自定义域名必备）
+      - name: 复制 CNAME（自定义域名）
         run: echo "docs.esupagent.com" > ./.vitepress/dist/CNAME
 
       - name: 部署到 Pages
