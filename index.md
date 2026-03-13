@@ -20,11 +20,6 @@ hero:
 
 
 features:
-  - title: AI 基础设施
-    icon:
-      src: /svg/dev.svg
-    link: /AI_Infrastructure/
-    details: Ollama、vLLM、LlamaIndex、LMDeploy、LLaMA Factory 完整技术栈
   - title: Claude AI 助手
     icon:
       src: /svg/Claude.svg
