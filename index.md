@@ -30,11 +30,6 @@ features:
       src: /svg/openclaw.svg
     link: /OpenClaw/
     details: 开源技术栈，提供灵活可扩展的开发框架和社区支持
-  - title: LLM 大语言模型
-    icon:
-      src: /svg/ollama.svg
-    link: /AI_Infrastructure/01-Ollama 完全指南
-    details: Llama、Qwen、Gemma 等大模型的本地部署与应用
   - title: VLM 视觉语言模型
     icon:
       src: /svg/lmdeploy.svg
