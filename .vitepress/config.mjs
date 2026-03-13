@@ -32,7 +32,6 @@ export default defineConfig({
         {text:'AI 视频教程',link:'/videos/'},
         {text:'AI 基础',link:'/AI_basics/'}
       ] },
-      {text:'AI 基础设施',link:'/AI_Infrastructure/'},
       {text:'Claude Code',link:'/AI_docs/Claude-Code'},
        {text:'openClaw',link:'/OpenClaw/'},
       {text:'示例',link:'www.googo.com'}
