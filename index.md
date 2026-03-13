@@ -20,6 +20,11 @@ hero:
 
 
 features:
+  - title: AI 基础设施
+    icon:
+      src: /svg/infrastructure.svg
+    link: /AI_Infrastructure/
+    details: Ollama、vLLM、LlamaIndex、LMDeploy、LLaMA Factory 完整技术栈
   - title: Claude AI 助手
     icon:
       src: /svg/Claude.svg
@@ -30,6 +35,31 @@ features:
       src: /svg/openclaw.svg
     link: /OpenClaw/
     details: 开源技术栈，提供灵活可扩展的开发框架和社区支持
+  - title: LLM 大语言模型
+    icon:
+      src: /svg/llm.svg
+    link: /AI_Infrastructure/01-Ollama 完全指南
+    details: Llama、Qwen、Gemma 等大模型的本地部署与应用
+  - title: VLM 视觉语言模型
+    icon:
+      src: /svg/vlm.svg
+    link: /AI_Infrastructure/04-LMDeploy 完全指南
+    details: 图文理解、视觉问答等多模态 AI 技术
+  - title: LlamaIndex
+    icon:
+      src: /svg/llamaindex.svg
+    link: /AI_Infrastructure/03-LlamaIndex 完全指南
+    details: RAG 数据索引框架，构建私有知识库问答系统
+  - title: LLaMA Factory
+    icon:
+      src: /svg/llama-factory.svg
+    link: /AI_Infrastructure/
+    details: 一站式大模型微调工具，支持 100+ 模型高效训练
+  - title: Ollama
+    icon:
+      src: /svg/ollama.svg
+    link: /AI_Infrastructure/01-Ollama 完全指南
+    details: 本地运行大模型的最佳选择，开箱即用
  
 ---
 

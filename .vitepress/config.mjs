@@ -27,11 +27,12 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: 'AI 沉浸式学习',  items:[
-        {text:'AI 学习资料',link:'markdown-examples'},
+        {text:'AI 学习资料',link:'/AI_Infrastructure/'},
         {text:'AI 实战项目',link:'/AI_docs'},
         {text:'AI 视频教程',link:'/videos/'},
         {text:'AI 基础',link:'/AI_basics/'}
       ] },
+      {text:'AI 基础设施',link:'/AI_Infrastructure/'},
       {text:'Claude Code',link:'/AI_docs/Claude-Code'},
        {text:'openClaw',link:'/OpenClaw/'},
       {text:'示例',link:'www.googo.com'}
@@ -60,7 +61,8 @@ export default defineConfig({
       "/pythond_docs": set_sidebar("/python_docs"),
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
-      '/OpenClaw/': set_sidebar('/OpenClaw')
+      '/OpenClaw/': set_sidebar('/OpenClaw'),
+      '/AI_Infrastructure/': set_sidebar('/AI_Infrastructure')
     },
 
     socialLinks: [
