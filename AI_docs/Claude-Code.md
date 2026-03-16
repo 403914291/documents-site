@@ -64,7 +64,7 @@ nano ~/.claude/settings.json
 Windows 用户在 CMD 里运行：
 
 ```cmd
-setx ANTHROPIC_AUTH_TOKEN "sk-sp-94164e75fef4419f1e"
+setx ANTHROPIC_AUTH_TOKEN "YOUR_API_KEY"
 setx ANTHROPIC_BASE_URL "https://coding.dashscope.aliyuncs.com/apps/anthropic"
 setx ANTHROPIC_MODEL "qwen3.5-plus"
 ```

@@ -34,7 +34,7 @@ export default defineConfig({
       ] },
       {text:'Claude Code',link:'/AI_docs/Claude-Code'},
        {text:'openClaw',link:'/OpenClaw/'},
-      {text:'示例',link:'www.googo.com'}
+      {text:'示例',link:'https://www.googo.com'}
     ],
 
     // sidebar: [
@@ -57,7 +57,7 @@ export default defineConfig({
 
     // ],
     sidebar: {
-      "/pythond_docs": set_sidebar("/python_docs"),
+      "/python_docs": set_sidebar("/python_docs"),
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
@@ -66,7 +66,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
-      {icon: 'gitee',link:'htts://github.com'}
+      {icon: 'gitee',link:'https://gitee.com'}
     ],
     footer:{
       copyright:"Copyright@ 2026.01.06 create site"

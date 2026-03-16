@@ -1,4 +1,4 @@
----
+﻿---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
@@ -16,9 +16,6 @@ hero:
     - theme: alt
       text: AI 项目实战
       link: /api-examples
- 
-
-
 features:
   - title: Claude AI 助手
     icon:

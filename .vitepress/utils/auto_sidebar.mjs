@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 // 文件根目录
 const DIR_PATH = path.resolve();
-// 白名单,过滤不是文章的文件和文件夹
+// 白名单，过滤不是文章的文件和文件夹
 const WHITE_LIST = [
   "index.md",
   ".vitepress",
@@ -23,14 +23,14 @@ const intersections = (arr1, arr2) =>
 function getList(params, path1, pathname) {
   // 存放结果
   const res = [];
-  // 开始遍历params
+  // 开始遍历 params
   for (let file in params) {
     // 拼接目录
     const dir = path.join(path1, params[file]);
     // 判断是否是文件夹
     const isDir = isDirectory(dir);
     if (isDir) {
-      // 如果是文件夹,读取之后作为下一次递归参数
+      // 如果是文件夹，读取之后作为下一次递归参数
       const files = fs.readdirSync(dir);
       res.push({
         text: params[file],
@@ -51,17 +51,17 @@ function getList(params, path1, pathname) {
       });
     }
   }
-  // 对name做一下处理，把后缀删除
-  res.map((item) => {
-    item.text = item.text.replace(/\.md$/, "");
-  });
-  return res;
+  // 对 name 做一下处理，把后缀删除
+  return res.map((item) => ({
+    ...item,
+    text: item.text.replace(/\.md$/, ""),
+  }));
 }
 
 export const set_sidebar = (pathname) => {
-  // 获取pathname的路径
+  // 获取 pathname 的路径
   const dirPath = path.join(DIR_PATH, pathname);
-  // 读取pathname下的所有文件或者文件夹
+  // 读取 pathname 下的所有文件或者文件夹
   const files = fs.readdirSync(dirPath);
   // 过滤掉
   const items = intersections(files, WHITE_LIST);
