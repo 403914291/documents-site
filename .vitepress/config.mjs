@@ -7,14 +7,16 @@ export default defineConfig({
    *
    * 使用场景：
    * 1. 自定义域名部署：使用 '/'（根路径）
-   * 2. GitHub Pages 部署：使用 '/仓库名/'，例如 '/documents-site/'
+   * 2. GitHub Pages 部署（无自定义域名）：使用 '/仓库名/'，例如 '/documents-site/'
    * 3. Vercel/Netlify：通常使用 '/' 即可
    *
    * 注意：路径必须以 / 开头和结尾
    */
-  // base: '/',
+  // 使用自定义域名 docs.esupagent.com
+  base: '/',
   title: "沉浸式学习资料库",
   description: "一站式学习",
+  ignoreDeadLinks: true,
   themeConfig: {
     logo:'/images/logo.png',
     search: {

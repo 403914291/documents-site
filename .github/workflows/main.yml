@@ -1,39 +1,50 @@
 name: 部署 documents-site 到 GitHub Pages
+
 on:
   push:
-    branches: [ main ] # 推送到 main 分支时自动部署
-# 新增：授予部署 Pages 的权限
+    branches: [ main ]
+
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
-  
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 确保获取完整提交记录（避免构建异常）
+          fetch-depth: 0
 
       - name: 配置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 匹配你本地的 Node 版本
+          node-version: '20'
           cache: 'npm'
 
       - name: 安装依赖
-        run: npm install
+        run: npm ci
 
       - name: 构建 VitePress
         run: npm run docs:build
 
-      - name: 复制 CNAME（自定义域名）
-        run: echo "docs.esupagent.com" > ./.vitepress/dist/CNAME
-
-      - name: 部署到 Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./.vitepress/dist # 重点：VitePress 构建后的目录（适配你的项目结构）
-          force_orphan: true  
+          path: ./.vitepress/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
