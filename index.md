@@ -44,7 +44,7 @@ features:
     details: 一站式大模型微调工具，支持 100+ 模型高效训练
   - title: Ollama
     icon:
-      src: /svg/ollama.svg
+      src: /svg/Ollama.svg
     link: /AI_Infrastructure/01-Ollama 完全指南
     details: 本地运行大模型的最佳选择，开箱即用
 ---
