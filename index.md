@@ -7,8 +7,8 @@ hero:
   text: "一站式学习"
   tagline: 持续学习，不断进步！每天进步一点点
   image:
-    src: /lottie/work2.json
-    alt: 背景图
+    src: /svg/Claude.svg
+    alt: Hero 动画
   actions:
     - theme: brand
       text: AI 沉浸式学习
@@ -51,7 +51,7 @@ features:
 layoutClass: home-layout-custom
 ---
 
-<!-- Lottie 动画容器 - VitePress Hero Image 标准位置 -->
+<!-- Lottie 动画容器 - 覆盖在 VitePress Hero Image (SVG 占位图) 上方 -->
 <div id="lottie-hero" class="lottie-hero-container"></div>
 
 <script setup>
@@ -75,11 +75,12 @@ onMounted(() => {
 </script>
 
 <style>
-/* 自定义 Hero 布局 - 适配 VitePress 标准结构 */
+/* 自定义 Hero 布局 - 使用 VitePress 标准结构 */
 .home-layout-custom .VPHomeHero {
   position: relative;
 }
 
+/* Hero 容器 - 保持 VitePress 默认网格布局 */
 .home-layout-custom .VPHomeHero .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -96,24 +97,44 @@ onMounted(() => {
   padding-right: 24px;
 }
 
-/* Lottie 动画容器 - VitePress Hero Image 标准位置（右侧） */
+/*
+ * Lottie 动画容器 - 绝对定位到 VitePress .VPImage 位置
+ * 覆盖在 SVG 占位图上方，保持相同尺寸和位置
+ */
 .lottie-hero-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   max-width: 480px;
   height: auto;
   aspect-ratio: 1 / 1;
-  margin: 0 auto;
-  /* 使用 VitePress CSS 变量适配深色模式 */
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
-  opacity: 0.95;
-  transition: opacity 0.3s ease;
+  pointer-events: none; /* 让点击穿透到下方的 SVG 占位图 */
+  z-index: 10;
 }
 
+/* 隐藏 SVG 占位图，但保留其占位空间 */
+.home-layout-custom .VPHomeHero .image img {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* 确保 SVG 占位图容器保持尺寸 */
+.home-layout-custom .VPHomeHero .image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 桌面端悬停效果 */
 .lottie-hero-container:hover {
-  opacity: 1;
+  z-index: 11;
 }
 
-/* 平板设备响应式 - 调整布局和大小 */
+/* 平板设备响应式 */
 @media (max-width: 960px) {
   .home-layout-custom .VPHomeHero .container {
     grid-template-columns: 1fr;
@@ -128,11 +149,10 @@ onMounted(() => {
 
   .lottie-hero-container {
     max-width: 320px;
-    margin: 0 auto;
   }
 }
 
-/* 移动设备响应式 - 缩小动画并调整位置 */
+/* 移动设备响应式 */
 @media (max-width: 768px) {
   .home-layout-custom .VPHomeHero .container {
     padding: 0 16px;
@@ -141,7 +161,6 @@ onMounted(() => {
   .lottie-hero-container {
     max-width: 200px;
     margin-top: 16px;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
   }
 }
 
@@ -150,9 +169,14 @@ onMounted(() => {
   .lottie-hero-container {
     display: none;
   }
+
+  /* 小屏幕显示 SVG 占位图 */
+  .home-layout-custom .VPHomeHero .image img {
+    opacity: 1;
+  }
 }
 
-/* 深色模式适配 - 使用 VitePress 变量 */
+/* 深色模式适配 */
 @media (prefers-color-scheme: dark) {
   .lottie-hero-container {
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
@@ -164,13 +188,9 @@ onMounted(() => {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
-/* 确保动画内容不遮挡文字 - VitePress 默认 z-index 层级 */
+/* 默认阴影效果 */
 .lottie-hero-container {
-  z-index: 1;
-}
-
-.home-layout-custom .VPHomeHero .text {
-  z-index: 2;
-  position: relative;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s ease;
 }
 </style>
