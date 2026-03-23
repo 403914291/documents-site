@@ -63,7 +63,40 @@ export default defineConfig({
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
-      '/AI_Infrastructure/': set_sidebar('/AI_Infrastructure')
+      '/AI_Infrastructure/': [
+        {
+          text: '📚 LLM 基础教程',
+          collapsed: false,
+          items: [
+            { text: '01-AI 大模型技术全景', link: '/AI_Infrastructure/01-LLM 基础教程/01-AI 大模型技术全景' },
+            { text: '02-机器学习基础', link: '/AI_Infrastructure/01-LLM 基础教程/02-机器学习基础' },
+            { text: '03-大模型工作原理', link: '/AI_Infrastructure/01-LLM 基础教程/03-大模型工作原理' },
+            { text: '04-Transformer', link: '/AI_Infrastructure/01-LLM 基础教程/04-Transformer' },
+            { text: '05-注意力机制', link: '/AI_Infrastructure/01-LLM 基础教程/05-注意力机制' },
+            { text: '06-KV 缓存', link: '/AI_Infrastructure/01-LLM 基础教程/06-KV 缓存' },
+            { text: '07-RLHF 人类反馈强化学习', link: '/AI_Infrastructure/01-LLM 基础教程/07-RLHF 人类反馈强化学习' },
+            { text: '08-预训练', link: '/AI_Infrastructure/01-LLM 基础教程/08-预训练' },
+            { text: '09-微调', link: '/AI_Infrastructure/01-LLM 基础教程/09-微调' }
+          ]
+        },
+        {
+          text: '🚀 部署指南',
+          collapsed: true,
+          items: [
+            { text: '01-Ollama 全面指南', link: '/AI_Infrastructure/02-部署指南/01-Ollama 全面指南' },
+            { text: '02-vLLM 全面指南', link: '/AI_Infrastructure/02-部署指南/02-vLLM 全面指南' },
+            { text: '03-LlamaIndex 全面指南', link: '/AI_Infrastructure/02-部署指南/03-LlamaIndex 全面指南' },
+            { text: '04-LMDeploy 全面指南', link: '/AI_Infrastructure/02-部署指南/04-LMDeploy 全面指南' }
+          ]
+        },
+        {
+          text: '📋 标准规范',
+          collapsed: true,
+          items: [
+            { text: 'AI 应用开发标准规范', link: '/AI_Infrastructure/03-标准规范/00-AI 应用开发标准规范' }
+          ]
+        }
+      ]
     },
 
     socialLinks: [
