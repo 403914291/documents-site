@@ -1,415 +1,780 @@
 # AI 应用开发标准规范
 
-> 基于 Anthropic、OpenAI、Microsoft、Google 等领先 AI 公司的最佳实践，制定本开发规范
+> 深入 AI 应用开发的核心规范，涵盖模型选择、Prompt 工程、输出验证、安全控制、测试策略和性能优化
 >
 > 参考来源：
-> - [Anthropic Responsible AI](https://www.anthropic.com/research/building-reliable-ai)
-> - [OpenAI Best Practices](https://platform.openai.com/docs/guides)
-> - [Microsoft AI Principles](https://www.microsoft.com/en-us/ai/responsible-ai)
-> - [Google AI Principles](https://ai.google/principles/)
+> - [Anthropic Production Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/production)
+> - [OpenAI Production Guidelines](https://platform.openai.com/docs/guides/production)
+> - [Microsoft AI Security](https://learn.microsoft.com/en-us/azure/ai-services/security)
+> - [OWASP AI Security Guide](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
 ---
 
 ## 📋 目录
 
-1. [核心原则](#-核心原则)
-2. [代码规范](#-代码规范)
-3. [安全规范](#-安全规范)
-4. [测试规范](#-测试规范)
-5. [文档规范](#-文档规范)
-6. [部署规范](#-部署规范)
-7. [AI 辅助开发规范](#-ai 辅助开发规范)
+1. [AI 模型选择与评估](#-ai 模型选择与评估)
+2. [Prompt 工程规范](#-prompt 工程规范)
+3. [AI 输出验证与质量控制](#-ai 输出验证与质量控制)
+4. [AI 应用安全](#-ai 应用安全)
+5. [AI 应用测试策略](#-ai 应用测试策略)
+6. [性能优化与成本控制](#-性能优化与成本控制)
+7. [监控与日志](#-监控与日志)
 
 ---
 
-## 🎯 核心原则
+## 🎯 AI 模型选择与评估
 
-### 1. 人类监督原则
+### 1. 模型选择矩阵
 
-**所有 AI 生成的代码必须经过人工审查**
+| 场景 | 推荐模型 | 理由 | 成本 |
+|------|---------|------|------|
+| 复杂推理 | Claude 3.5 Sonnet | 推理能力强，准确率高 | 中 |
+| 快速响应 | Claude 3 Haiku | 延迟低，成本低 | 低 |
+| 代码生成 | Claude 3.5 Sonnet | 代码质量高 | 中 |
+| 简单问答 | Claude 3 Haiku | 成本低，速度快 | 低 |
+| 长文档处理 | Claude 3.5 Sonnet (200K) | 上下文窗口大 | 中高 |
 
-- ✅ AI 生成的代码必须有人类审查
-- ✅ 关键业务逻辑必须由人类编写或深度审查
-- ✅ 安全相关代码禁止完全依赖 AI 生成
+### 2. 模型评估指标
 
-### 2. 透明性原则
-
-**AI 参与程度必须明确标识**
-
-- ✅ 在代码注释中标注 AI 生成的部分
-- ✅ 在 PR 描述中说明 AI 参与程度
-- ✅ 保留 AI 辅助决策的记录
-
-### 3. 责任归属原则
-
-**人类对最终代码质量负责**
-
-- ✅ AI 是辅助工具，人类是责任主体
-- ✅ 代码质量问题由人类开发者承担
-- ✅ 建立 AI 辅助开发的追责机制
-
-### 4. 公平性原则
-
-**AI 应用应当公平对待所有用户**
-
-- ✅ 避免算法歧视
-- ✅ 测试不同用户群体的体验
-- ✅ 定期审计算法公平性
-
-### 5. 隐私保护原则
-
-**保护用户数据和隐私**
-
-- ✅ 最小化数据收集
-- ✅ 数据加密存储和传输
-- ✅ 提供数据删除机制
-
----
-
-## 💻 代码规范
-
-### 1. 项目结构
-
-```
-project/
-├── src/                    # 源代码目录
-│   ├── components/         # 组件
-│   ├── services/           # 服务层
-│   ├── utils/              # 工具函数
-│   └── types/              # 类型定义
-├── tests/                  # 测试代码
-│   ├── unit/               # 单元测试
-│   ├── integration/        # 集成测试
-│   └── e2e/                # 端到端测试
-├── docs/                   # 文档
-├── scripts/                # 脚本工具
-└── .claude/                # AI 代理配置
-    └── skills/             # AI 技能
-```
-
-### 2. 命名规范
-
-| 类型 | 规范 | 示例 |
-|------|------|------|
-| 变量 | 小驼峰 | `userName`, `totalCount` |
-| 常量 | 大写下划线 | `MAX_RETRY`, `API_BASE_URL` |
-| 函数 | 小驼峰，动词开头 | `getUserById`, `calculateTotal` |
-| 类 | 大驼峰 | `UserService`, `HttpClient` |
-| 组件 | 大驼峰 | `UserProfile`, `DataTable` |
-
-### 3. 注释规范
-
-```typescript
-/**
- * 获取用户信息
- * @param userId - 用户 ID
- * @param options - 可选配置
- * @returns 用户信息对象
- * @throws {UserNotFoundError} 用户不存在时抛出
- * 
- * @ai-generated - 此函数由 AI 辅助生成，已人工审查
- */
-async function getUser(userId: string, options?: GetUserOptions): Promise<User> {
-  // 验证用户 ID 格式
-  if (!isValidUserId(userId)) {
-    throw new InvalidUserIdError('Invalid user ID format');
-  }
-  
-  const user = await db.users.findById(userId);
-  
-  if (!user) {
-    throw new UserNotFoundError(`User ${userId} not found`);
-  }
-  
-  return user;
-}
-```
-
-### 4. 错误处理
-
-```typescript
-// ✅ 正确：明确的错误类型和处理
-try {
-  const result = await riskyOperation();
-  return { success: true, data: result };
-} catch (error) {
-  if (error instanceof NetworkError) {
-    logger.warn('Network error, retrying...', { error });
-    return retryOperation();
-  }
-  logger.error('Operation failed', { error });
-  return { success: false, error: error.message };
-}
-
-// ❌ 错误：空的 catch 块
-try {
-  await riskyOperation();
-} catch (error) {
-  // 什么都不做 - 禁止！
-}
-```
-
----
-
-## 🔒 安全规范
-
-### 1. 密钥管理
-
-```typescript
-// ✅ 正确：使用环境变量
-const apiKey = process.env.API_KEY;
-const dbPassword = process.env.DB_PASSWORD;
-
-// ❌ 错误：硬编码密钥 - 禁止！
-const apiKey = 'sk-1234567890abcdef';
-```
-
-### 2. 输入验证
-
-```typescript
-// ✅ 正确：验证所有输入
-function createUser(input: CreateUserInput) {
-  // 验证必填字段
-  if (!input.email || !input.password) {
-    throw new ValidationError('Missing required fields');
-  }
-  
-  // 验证邮箱格式
-  if (!isValidEmail(input.email)) {
-    throw new ValidationError('Invalid email format');
-  }
-  
-  // 验证密码强度
-  if (!isStrongPassword(input.password)) {
-    throw new ValidationError('Password too weak');
-  }
-  
-  return db.users.create({
-    email: sanitize(input.email),
-    password: hash(input.password)
-  });
-}
-```
-
-### 3. AI 安全
-
-```typescript
-// ✅ 正确：限制 AI 权限
-const aiConfig = {
-  maxTokens: 1000,
-  allowedModels: ['claude-3-sonnet'],
-  blockedActions: ['delete', 'drop', 'exec'],
-  requireHumanApproval: true
-};
-
-// ❌ 错误：无限制的 AI 访问 - 危险！
-```
-
-### 4. OWASP Top 10 防护
-
-| 风险 | 防护措施 |
-|------|---------|
-| 注入攻击 | 参数化查询、输入验证 |
-| 身份认证失效 | 多因素认证、会话管理 |
-| 敏感数据泄露 | 加密、最小化收集 |
-| XSS | 输出编码、CSP |
-| 访问控制失效 | 基于角色的访问控制 |
-
----
-
-## 🧪 测试规范
-
-### 1. 测试覆盖率要求
-
-| 代码类型 | 最低覆盖率 |
-|----------|-----------|
-| 核心业务逻辑 | 90% |
-| 公共服务 | 80% |
-| UI 组件 | 70% |
-| 工具函数 | 85% |
-
-### 2. 单元测试
-
-```typescript
-describe('UserService', () => {
-  let userService: UserService;
-  let mockDb: MockDatabase;
-  
-  beforeEach(() => {
-    mockDb = new MockDatabase();
-    userService = new UserService(mockDb);
-  });
-  
-  describe('getUserById', () => {
-    it('should return user when exists', async () => {
-      const expectedUser = { id: '1', name: 'John' };
-      mockDb.users.findById.mockResolvedValue(expectedUser);
-      
-      const result = await userService.getUserById('1');
-      
-      expect(result).toEqual(expectedUser);
-    });
+```python
+# AI 模型评估框架
+class ModelEvaluator:
+    def __init__(self):
+        self.metrics = {
+            'accuracy': [],      # 准确率
+            'latency': [],       # 延迟 (ms)
+            'cost': [],          # 成本 ($/请求)
+            'hallucination': [], # 幻觉率
+            'toxicity': [],      # 有害内容率
+        }
     
-    it('should throw error when user not found', async () => {
-      mockDb.users.findById.mockResolvedValue(null);
-      
-      await expect(userService.getUserById('999'))
-        .rejects
-        .toThrow(UserNotFoundError);
-    });
-  });
-});
+    def evaluate(self, response, expected):
+        # 准确率评估
+        accuracy = self.calculate_accuracy(response, expected)
+        
+        # 幻觉检测
+        hallucination = self.detect_hallucination(response)
+        
+        # 毒性检测
+        toxicity = self.check_toxicity(response)
+        
+        return {
+            'accuracy': accuracy,
+            'hallucination': hallucination,
+            'toxicity': toxicity,
+            'passed': accuracy > 0.9 and hallucination < 0.05
+        }
 ```
 
-### 3. AI 生成代码的测试
+### 3. A/B 测试策略
 
-```typescript
-// ✅ AI 生成的代码必须有对应测试
-// 文件：src/utils/ai-helper.ts (AI 生成)
-
-// 文件：tests/utils/ai-helper.test.ts (对应测试)
-describe('AI Helper', () => {
-  it('should handle edge case X', () => {
-    // 测试 AI 生成的边界情况处理
-  });
-});
+```python
+# 多模型 A/B 测试
+def ab_test_models(prompt, models=['haiku', 'sonnet'], sample_size=100):
+    results = {}
+    
+    for model in models:
+        scores = []
+        for i in range(sample_size):
+            response = call_llm(model, prompt)
+            score = evaluate_response(response)
+            scores.append(score)
+        
+        results[model] = {
+            'avg_score': np.mean(scores),
+            'std_dev': np.std(scores),
+            'p95_latency': np.percentile(latencies, 95)
+        }
+    
+    return select_best_model(results)
 ```
 
 ---
 
-## 📚 文档规范
+## ✍️ Prompt 工程规范
 
-### 1. README 结构
+### 1. Prompt 结构模板
 
 ```markdown
-# 项目名称
+# Role (角色)
+你是一位 [专业角色]，擅长 [具体技能]
 
-> 项目简介
+# Context (背景)
+[任务背景信息]
 
-## 快速开始
+# Task (任务)
+[具体任务描述]
 
-## 功能特性
+# Constraints (约束)
+- 约束 1
+- 约束 2
+- 约束 3
 
-## 安装指南
+# Output Format (输出格式)
+[期望的输出格式]
 
-## 使用示例
-
-## API 文档
-
-## 贡献指南
-
-## 许可证
+# Examples (示例)
+输入：[示例输入]
+输出：[示例输出]
 ```
 
-### 2. 变更日志
+### 2. Prompt 版本管理
 
-```markdown
-## [1.2.0] - 2026-03-24
-
-### 新增
-- 添加用户管理功能
-- 支持批量导入导出
-
-### 修复
-- 修复登录页面的 XSS 漏洞
-- 修复数据库连接池泄漏
-
-### 变更
-- 升级 Node.js 到 v20
-- 重构用户认证模块
+```python
+# Prompt 版本控制
+PROMPT_VERSIONS = {
+    'customer_support_v1': {
+        'version': '1.0.0',
+        'created': '2026-03-24',
+        'prompt': '''你是一位客服助手...''',
+        'metrics': {
+            'accuracy': 0.85,
+            'satisfaction': 4.2
+        }
+    },
+    'customer_support_v2': {
+        'version': '2.0.0',
+        'created': '2026-03-30',
+        'prompt': '''你是一位资深客服专家...''',
+        'metrics': {
+            'accuracy': 0.92,
+            'satisfaction': 4.7
+        }
+    }
+}
 ```
 
----
+### 3. Prompt 注入防护
 
-## 🚀 部署规范
+```python
+# 检测并阻止 Prompt 注入
+def detect_prompt_injection(user_input):
+    dangerous_patterns = [
+        r'ignore\s+previous',
+        r'forget\s+all',
+        r'you\s+are\s+now',
+        r'system\s+instruction',
+        r'override\s+rules',
+    ]
+    
+    for pattern in dangerous_patterns:
+        if re.search(pattern, user_input, re.IGNORECASE):
+            return True, 'Potential prompt injection detected'
+    
+    return False, 'Safe'
 
-### 1. CI/CD 流程
-
-```yaml
-name: Deploy
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tests
-        run: npm test
-      
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build
-        run: npm run build
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to production
-        run: ./deploy.sh
-```
-
-### 2. 回滚机制
-
-```bash
-#!/bin/bash
-# rollback.sh
-
-CURRENT_VERSION=$(cat .version)
-echo "Rolling back from $CURRENT_VERSION"
-
-git checkout $(git rev-list -n 2 HEAD | tail -1)
-./deploy.sh
-
-notify_team "Rolled back to previous version"
+# 使用示例
+is_injection, message = detect_prompt_injection(user_input)
+if is_injection:
+    return "无法处理该请求"
 ```
 
 ---
 
-## 🤖 AI 辅助开发规范
+## ✅ AI 输出验证与质量控制
 
-### 1. 适用场景
+### 1. 多层验证架构
 
-| 场景 | 推荐度 | 说明 |
-|------|--------|------|
-| 代码补全 | ✅ 推荐 | 日常编码辅助 |
-| 单元测试生成 | ✅ 推荐 | 提高测试覆盖率 |
-| 文档生成 | ✅ 推荐 | API 文档、注释 |
-| 代码重构 | ⚠️ 谨慎 | 需要人工审查 |
-| 安全代码 | ❌ 禁止 | 必须由专家编写 |
-| 核心算法 | ❌ 禁止 | 必须由专家编写 |
+```python
+class AIOutputValidator:
+    def __init__(self):
+        self.validators = [
+            self.validate_format,
+            self.validate_facts,
+            self.validate_safety,
+            self.validate_relevance,
+        ]
+    
+    def validate(self, output, context=None):
+        results = []
+        
+        for validator in self.validators:
+            passed, message = validator(output, context)
+            results.append({
+                'validator': validator.__name__,
+                'passed': passed,
+                'message': message
+            })
+        
+        return {
+            'overall_passed': all(r['passed'] for r in results),
+            'details': results
+        }
+    
+    def validate_format(self, output, context):
+        # 验证输出格式是否符合预期
+        pass
+    
+    def validate_facts(self, output, context):
+        # 事实核查（可调用搜索 API）
+        pass
+    
+    def validate_safety(self, output, context):
+        # 安全检查（有害内容、偏见等）
+        pass
+    
+    def validate_relevance(self, output, context):
+        # 相关性检查
+        pass
+```
 
-### 2. 审查清单
+### 2. 幻觉检测
 
-- [ ] AI 生成的代码是否经过人工审查
-- [ ] 是否有对应的单元测试
-- [ ] 是否标注了 AI 生成标识
-- [ ] 是否存在安全漏洞
-- [ ] 性能是否可接受
+```python
+# 使用 RAG + 引用验证减少幻觉
+def verify_with_rag(response, knowledge_base):
+    claims = extract_claims(response)
+    verified_claims = []
+    
+    for claim in claims:
+        similar_docs = knowledge_base.search(claim, top_k=3)
+        is_supported = any(
+            calculate_similarity(claim, doc) > 0.8 
+            for doc in similar_docs
+        )
+        verified_claims.append({
+            'claim': claim,
+            'supported': is_supported
+        })
+    
+    hallucination_rate = sum(
+        1 for c in verified_claims if not c['supported']
+    ) / len(verified_claims)
+    
+    return {
+        'hallucination_rate': hallucination_rate,
+        'verified_claims': verified_claims,
+        'passed': hallucination_rate < 0.1
+    }
+```
 
-### 3. 质量指标
+### 3. 质量评分系统
 
-| 指标 | 目标值 |
-|------|--------|
-| AI 代码审查率 | 100% |
-| AI 代码 bug 率 | < 5% |
-| 人类修改率 | < 30% |
+```python
+def calculate_quality_score(response, criteria):
+    scores = {}
+    
+    # 准确性 (0-10)
+    scores['accuracy'] = evaluate_accuracy(response)
+    
+    # 完整性 (0-10)
+    scores['completeness'] = evaluate_completeness(response)
+    
+    # 一致性 (0-10)
+    scores['consistency'] = evaluate_consistency(response)
+    
+    # 有用性 (0-10)
+    scores['helpfulness'] = evaluate_helpfulness(response)
+    
+    # 加权总分
+    weights = {
+        'accuracy': 0.3,
+        'completeness': 0.2,
+        'consistency': 0.2,
+        'helpfulness': 0.3
+    }
+    
+    total_score = sum(
+        scores[k] * weights[k] for k in scores
+    )
+    
+    return {
+        'total': total_score,
+        'breakdown': scores,
+        'grade': get_grade(total_score)
+    }
+
+def get_grade(score):
+    if score >= 9: return 'A'
+    if score >= 8: return 'B'
+    if score >= 7: return 'C'
+    if score >= 6: return 'D'
+    return 'F'
+```
+
+---
+
+## 🔒 AI 应用安全
+
+### 1. AI 安全威胁模型
+
+| 威胁类型 | 描述 | 防护措施 |
+|---------|------|---------|
+| Prompt 注入 | 恶意用户尝试覆盖系统指令 | 输入过滤、指令分离 |
+| 数据泄露 | AI 意外泄露敏感信息 | 输出过滤、敏感词检测 |
+| 越狱攻击 | 绕过安全限制 | 多层安全检查 |
+| 训练数据投毒 | 恶意训练数据影响模型 | 使用可信模型、验证输出 |
+| 模型窃取 | 通过 API 调用复制模型行为 | 速率限制、异常检测 |
+
+### 2. 输入安全检查
+
+```python
+class AIInputSecurity:
+    def __init__(self):
+        self.max_length = 4000
+        self.blocked_patterns = [
+            r'system\s+prompt',
+            r'ignore\s+instructions',
+            r'output\s+your\s+training',
+        ]
+        self.sensitive_keywords = [
+            'password', 'secret', 'api_key', 'token'
+        ]
+    
+    def check(self, user_input):
+        # 长度检查
+        if len(user_input) > self.max_length:
+            return False, 'Input too long'
+        
+        # 模式检查
+        for pattern in self.blocked_patterns:
+            if re.search(pattern, user_input, re.IGNORECASE):
+                return False, 'Blocked pattern detected'
+        
+        # 敏感词检查
+        for keyword in self.sensitive_keywords:
+            if keyword in user_input.lower():
+                return False, 'Sensitive keyword detected'
+        
+        return True, 'Safe'
+```
+
+### 3. 输出安全检查
+
+```python
+class AIOutputSecurity:
+    def __init__(self):
+        self.pii_patterns = {
+            'email': r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
+            'phone': r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b',
+            'ssn': r'\b\d{3}-\d{2}-\d{4}\b',
+            'credit_card': r'\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b',
+        }
+    
+    def check(self, output):
+        # PII 检测
+        for pii_type, pattern in self.pii_patterns.items():
+            matches = re.findall(pattern, output)
+            if matches:
+                return False, f'{pii_type} detected', matches
+        
+        # 有害内容检测
+        if self.contains_harmful_content(output):
+            return False, 'Harmful content detected'
+        
+        # 偏见检测
+        if self.contains_bias(output):
+            return False, 'Biased content detected'
+        
+        return True, 'Safe'
+    
+    def redact_pii(self, text):
+        for pii_type, pattern in self.pii_patterns.items():
+            text = re.sub(pattern, f'[REDACTED {pii_type}]', text)
+        return text
+```
+
+### 4. 速率限制与配额管理
+
+```python
+from datetime import datetime, timedelta
+
+class RateLimiter:
+    def __init__(self):
+        self.requests = {}  # user_id -> list of timestamps
+        self.limits = {
+            'requests_per_minute': 60,
+            'requests_per_hour': 1000,
+            'tokens_per_day': 1000000
+        }
+    
+    def check_rate_limit(self, user_id):
+        now = datetime.now()
+        
+        # 清理旧记录
+        if user_id not in self.requests:
+            self.requests[user_id] = []
+        
+        self.requests[user_id] = [
+            ts for ts in self.requests[user_id]
+            if now - ts < timedelta(hours=1)
+        ]
+        
+        # 检查限制
+        if len(self.requests[user_id]) >= self.limits['requests_per_hour']:
+            return False, 'Rate limit exceeded'
+        
+        self.requests[user_id].append(now)
+        return True, 'OK'
+```
+
+---
+
+## 🧪 AI 应用测试策略
+
+### 1. 测试金字塔
+
+```
+           /\
+          /  \
+         / E2E \        端到端测试 (10%)
+        /------\
+       /  Integ \      集成测试 (30%)
+      /----------\
+     /   Unit     \    单元测试 (60%)
+    /--------------\
+```
+
+### 2. Prompt 单元测试
+
+```python
+import pytest
+
+class TestPrompts:
+    def test_customer_support_greeting(self):
+        prompt = load_prompt('customer_support', 'greeting')
+        response = call_llm('haiku', prompt)
+        
+        assert '欢迎' in response or '您好' in response
+        assert len(response) < 200
+        assert is_polite(response)
+    
+    def test_code_generation_python(self):
+        prompt = load_prompt('code_gen', 'python_function')
+        response = call_llm('sonnet', prompt)
+        
+        assert is_valid_python(response)
+        assert has_docstring(response)
+        assert has_type_hints(response)
+    
+    def test_summarization_accuracy(self):
+        document = load_test_document()
+        expected_summary = load_expected_summary()
+        
+        prompt = build_summarization_prompt(document)
+        response = call_llm('sonnet', prompt)
+        
+        similarity = calculate_similarity(response, expected_summary)
+        assert similarity > 0.8
+```
+
+### 3. 集成测试
+
+```python
+class TestAIRAGSystem:
+    @pytest.fixture
+    def rag_system(self):
+        return RAGSystem(
+            llm='sonnet',
+            vector_store=test_vector_store,
+            retriever=test_retriever
+        )
+    
+    def test_rag_retrieval(self, rag_system):
+        query = "公司报销政策是什么？"
+        response = rag_system.query(query)
+        
+        assert response.answer is not None
+        assert len(response.sources) > 0
+        assert all(hasattr(s, 'document_id') for s in response.sources)
+    
+    def test_rag_hallucination_rate(self, rag_system):
+        test_cases = load_test_cases('hallucination_test.json')
+        hallucinations = 0
+        
+        for case in test_cases:
+            response = rag_system.query(case['question'])
+            if not verify_facts(response.answer, case['facts']):
+                hallucinations += 1
+        
+        rate = hallucinations / len(test_cases)
+        assert rate < 0.1, f'Hallucination rate {rate} exceeds threshold'
+```
+
+### 4. 压力测试
+
+```python
+import asyncio
+import aiohttp
+
+async def stress_test_ai_api(concurrent_users=100, requests_per_user=10):
+    """AI API 压力测试"""
+    
+    async def make_request(session, user_id):
+        async with session.post(
+            'https://api.example.com/v1/chat',
+            json={'message': 'Hello'}
+        ) as response:
+            return await response.json()
+    
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for i in range(concurrent_users):
+            for j in range(requests_per_user):
+                tasks.append(make_request(session, i))
+        
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        success = sum(1 for r in results if not isinstance(r, Exception))
+        total = len(results)
+        
+        return {
+            'success_rate': success / total,
+            'avg_latency': calculate_avg_latency(results),
+            'p99_latency': calculate_p99_latency(results),
+            'errors': [str(r) for r in results if isinstance(r, Exception)]
+        }
+
+# 运行压力测试
+results = asyncio.run(stress_test_ai_api())
+assert results['success_rate'] > 0.99
+assert results['p99_latency'] < 2000  # 2 秒
+```
+
+---
+
+## ⚡ 性能优化与成本控制
+
+### 1. 缓存策略
+
+```python
+import hashlib
+import redis
+
+class AICache:
+    def __init__(self, redis_client):
+        self.redis = redis_client
+        self.ttl = {
+            'factual': 86400,    # 事实性问题缓存 24 小时
+            'creative': 3600,    # 创意性问题缓存 1 小时
+            'code': 604800,      # 代码缓存 7 天
+        }
+    
+    def get_cache_key(self, prompt, model):
+        content = f"{prompt}:{model}"
+        return f"ai_cache:{hashlib.md5(content.encode()).hexdigest()}"
+    
+    def get(self, prompt, model):
+        key = self.get_cache_key(prompt, model)
+        cached = self.redis.get(key)
+        return json.loads(cached) if cached else None
+    
+    def set(self, prompt, model, response, category='factual'):
+        key = self.get_cache_key(prompt, model)
+        ttl = self.ttl.get(category, 3600)
+        self.redis.setex(key, ttl, json.dumps(response))
+    
+    def should_cache(self, prompt):
+        # 判断是否应该缓存
+        if is_factual_question(prompt):
+            return True
+        if is_creative_question(prompt):
+            return False
+        return True
+```
+
+### 2. 批量处理优化
+
+```python
+# 批量处理减少 API 调用次数
+def batch_process_requests(requests, batch_size=10):
+    """批量处理请求，减少 API 调用成本"""
+    
+    batches = [
+        requests[i:i + batch_size]
+        for i in range(0, len(requests), batch_size)
+    ]
+    
+    results = []
+    for batch in batches:
+        # 合并相似请求
+        combined_prompt = combine_similar_prompts(batch)
+        combined_response = call_llm('sonnet', combined_prompt)
+        
+        # 拆分结果
+        batch_results = split_results(combined_response, batch)
+        results.extend(batch_results)
+    
+    return results
+
+# 成本对比
+# 单独调用：100 请求 × $0.01 = $1.00
+# 批量调用：10 批次 × $0.01 = $0.10
+# 节省：90%
+```
+
+### 3. 模型路由优化
+
+```python
+class ModelRouter:
+    """智能模型路由，平衡成本和质量"""
+    
+    def __init__(self):
+        self.model_costs = {
+            'haiku': 0.00025,    # $/1K tokens
+            'sonnet': 0.003,
+            'opus': 0.015,
+        }
+        self.model_quality = {
+            'haiku': 0.7,
+            'sonnet': 0.9,
+            'opus': 0.95,
+        }
+    
+    def route(self, request):
+        complexity = analyze_complexity(request)
+        
+        if complexity < 0.3:
+            return 'haiku'  # 简单问题用便宜模型
+        elif complexity < 0.7:
+            return 'sonnet'  # 中等问题用中等模型
+        else:
+            return 'opus'   # 复杂问题用最强模型
+    
+    def analyze_complexity(self, request):
+        factors = {
+            'length': len(request) / 1000,
+            'technical_terms': count_technical_terms(request),
+            'reasoning_required': detect_reasoning(request),
+        }
+        
+        return sum(factors.values()) / len(factors)
+```
+
+### 4. 成本监控与告警
+
+```python
+class CostMonitor:
+    def __init__(self):
+        self.daily_budget = 100  # $/天
+        self.alerts = {
+            '50%': 'warning',
+            '80%': 'critical',
+            '100%': 'emergency'
+        }
+    
+    def track_usage(self, model, tokens, cost):
+        # 记录使用量
+        redis_client.hincrby('daily_usage', model, tokens)
+        redis_client.incrbyfloat('daily_cost', cost)
+        
+        # 检查预算
+        current_cost = float(redis_client.get('daily_cost'))
+        usage_ratio = current_cost / self.daily_budget
+        
+        if usage_ratio >= 1.0:
+            self.send_alert('emergency', f'Daily budget exceeded: ${current_cost}')
+        elif usage_ratio >= 0.8:
+            self.send_alert('critical', f'80% of daily budget used: ${current_cost}')
+        elif usage_ratio >= 0.5:
+            self.send_alert('warning', f'50% of daily budget used: ${current_cost}')
+    
+    def send_alert(self, level, message):
+        # 发送告警到 Slack/邮件
+        pass
+```
+
+---
+
+## 📊 监控与日志
+
+### 1. 关键指标监控
+
+```python
+AI_METRICS = {
+    # 性能指标
+    'latency_p50': 'ms',
+    'latency_p95': 'ms',
+    'latency_p99': 'ms',
+    
+    # 质量指标
+    'accuracy_rate': '%',
+    'hallucination_rate': '%',
+    'user_satisfaction': '1-5',
+    
+    # 安全指标
+    'injection_attempts': 'count',
+    'blocked_outputs': 'count',
+    
+    # 成本指标
+    'tokens_per_request': 'count',
+    'cost_per_request': '$',
+    'daily_cost': '$',
+}
+```
+
+### 2. 结构化日志
+
+```python
+import structlog
+
+logger = structlog.get_logger()
+
+def log_ai_request(request, response, metadata):
+    logger.info(
+        'ai_request',
+        request_id=metadata['request_id'],
+        model=metadata['model'],
+        prompt_length=len(request),
+        response_length=len(response),
+        latency=metadata['latency'],
+        tokens_used=metadata['tokens'],
+        cost=metadata['cost'],
+        user_id=metadata['user_id'],
+        session_id=metadata['session_id'],
+    )
+
+def log_ai_error(error, request, metadata):
+    logger.error(
+        'ai_error',
+        error_type=type(error).__name__,
+        error_message=str(error),
+        request_id=metadata['request_id'],
+        model=metadata['model'],
+        user_id=metadata['user_id'],
+    )
+```
+
+### 3. 告警规则
+
+```python
+ALERT_RULES = {
+    'high_latency': {
+        'condition': 'latency_p95 > 5000',
+        'threshold': 5000,  # ms
+        'window': '5m',
+        'severity': 'warning'
+    },
+    'high_error_rate': {
+        'condition': 'error_rate > 0.05',
+        'threshold': 0.05,  # 5%
+        'window': '5m',
+        'severity': 'critical'
+    },
+    'budget_exceeded': {
+        'condition': 'daily_cost > daily_budget',
+        'threshold': 1.0,  # 100%
+        'window': '1h',
+        'severity': 'emergency'
+    },
+    'hallucination_spike': {
+        'condition': 'hallucination_rate > 0.1',
+        'threshold': 0.1,  # 10%
+        'window': '10m',
+        'severity': 'critical'
+    }
+}
+```
 
 ---
 
 ## 🔗 参考资料
 
-- [Anthropic Claude Code 文档](https://docs.anthropic.com/en/docs/claude-code)
-- [OpenAI API 最佳实践](https://platform.openai.com/docs/best-practices)
-- [Google AI 原则](https://ai.google/principles/)
-- [Microsoft AI 开发指南](https://docs.microsoft.com/en-us/ai/)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [Anthropic Production Guide](https://docs.anthropic.com/en/docs/build-with-claude/production)
+- [OpenAI Production Best Practices](https://platform.openai.com/docs/guides/production)
+- [Microsoft AI Security Framework](https://learn.microsoft.com/en-us/azure/ai-services/security)
+- [LangChain Production Deployment](https://python.langchain.com/docs/guides/production)
 
 ---
 

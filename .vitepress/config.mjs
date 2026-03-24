@@ -96,7 +96,7 @@ export default defineConfig({
           text: '📋 标准规范',
           collapsed: true,
           items: [
-            { text: 'AI 应用开发标准规范', link: '/AI_Infrastructure/03-标准规范/00-AI 应用开发标准规范' }
+            { text: 'AI 应用开发标准规范', link: '/AI_Infrastructure/03-标准规范/00-ai-app-development-standards' }
           ]
         }
       ]
