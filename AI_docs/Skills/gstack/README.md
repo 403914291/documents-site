@@ -10,11 +10,11 @@
 
 **2026 年 — 1,237 次贡献并持续增长：**
 
-![2026 年 GitHub 贡献 — 1,237 次贡献，1-3 月大幅加速](docs/images/github-2026.png)
+_（GitHub 贡献图：2026 年 1-3 月大幅加速）_
 
 **2013 年 — 我在 YC 构建 Bookface 时（772 次贡献）：**
 
-![2013 年 GitHub 贡献 — 在 YC 构建 Bookface 时的 772 次贡献](docs/images/github-2013.png)
+_（GitHub 贡献图：在 YC 构建 Bookface 时期）_
 
 同一个人。不同的时代。区别在于工具。
 
