@@ -66,7 +66,6 @@ export default defineConfig({
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
-      '/docs/skills/': set_sidebar('/docs/skills'),
       '/AI_Infrastructure/': [
         {
           text: '📚 LLM 基础教程',
