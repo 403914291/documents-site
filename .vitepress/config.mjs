@@ -34,7 +34,10 @@ export default defineConfig({
         {text:'AI 视频教程',link:'/videos/'},
         {text:'AI 基础',link:'/AI_basics/'}
       ] },
-      {text:'Claude Code',link:'/AI_docs/Claude-Code'},
+      { text: 'Claude Code',  items:[
+        {text:'Claude-Code',link:'/AI_docs/Claude-Code'},
+        {text:'Skills',link:'/AI_docs/Skills/'}
+      ]},
        {text:'openClaw',link:'/OpenClaw/'},
       {text:'示例',link:'https://www.googo.com'}
     ],
@@ -63,6 +66,7 @@ export default defineConfig({
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
+      '/docs/skills/': set_sidebar('/docs/skills'),
       '/AI_Infrastructure/': [
         {
           text: '📚 LLM 基础教程',
