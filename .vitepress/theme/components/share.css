@@ -1,0 +1,167 @@
+.share-component {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.share-title {
+  font-size: 0.875rem;
+  color: var(--vp-c-text-2);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 平台颜色 */
+.share-btn.wechat:hover {
+  background: #07C160;
+  color: white;
+}
+
+.share-btn.weibo:hover {
+  background: #E6162D;
+  color: white;
+}
+
+.share-btn.twitter:hover {
+  background: #000000;
+  color: white;
+}
+
+.share-btn.linkedin:hover {
+  background: #0077B5;
+  color: white;
+}
+
+.share-btn.copy:hover {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+/* 微信二维码弹窗 */
+.wechat-qrcode-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.wechat-qrcode-content {
+  background: var(--vp-c-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.wechat-qrcode-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin-bottom: 1rem;
+}
+
+.wechat-qrcode {
+  display: inline-block;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 8px;
+}
+
+/* 复制成功提示 */
+.copy-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--vp-c-brand);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .share-buttons {
+    gap: 0.5rem;
+  }
+  
+  .share-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .share-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .wechat-qrcode-content {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+  .wechat-qrcode {
+    background: #ffffff;
+  }
+  
+  .wechat-qrcode canvas {
+    filter: invert(1);
+  }
+}

@@ -8,11 +8,19 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
-  "keywords": ["AI", "Python", "OpenClaw", "documentation"],
+  "keywords": [
+    "AI",
+    "Python",
+    "OpenClaw",
+    "documentation"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "lottie-web": "^5.13.0",
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
   }
 }
