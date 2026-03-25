@@ -2,8 +2,9 @@
 import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+import './components/share.css'
 import Share from './components/share.vue'
-import Layout from './Layout.vue'
+import Layout from './layout.vue'
 
 /** @type {import('vitepress').Theme} */
 export default {
