@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useData } from 'vitepress'
 
 const { site, page } = useData()
@@ -74,9 +74,10 @@ const pageTitle = computed(() => {
 })
 
 // 分享到微信
-const shareToWechat = () => {
+const shareToWechat = async () => {
   showWechatQR.value = true
-  // 生成二维码
+  // 等待 DOM 更新后再生成二维码
+  await nextTick()
   generateQRCode()
 }
 
@@ -128,12 +129,6 @@ const copyLink = async () => {
   }
 }
 
-onMounted(() => {
-  // 预加载 QRCode 库
-  if (showWechatQR.value) {
-    generateQRCode()
-  }
-})
 </script>
 
-<style src="./Share.css"></style>
+<style src="./share.css"></style>

@@ -2,7 +2,7 @@
 import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
-import Share from './components/Share.vue'
+import Share from './components/share.vue'
 import Layout from './Layout.vue'
 
 /** @type {import('vitepress').Theme} */

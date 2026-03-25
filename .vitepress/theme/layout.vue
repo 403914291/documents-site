@@ -1,6 +1,6 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
-import Share from './components/Share.vue'
+import Share from './components/share.vue'
 
 const { Layout } = DefaultTheme
 </script>
