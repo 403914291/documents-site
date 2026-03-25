@@ -39,7 +39,7 @@ export default defineConfig({
         {text:'Skills',link:'/AI_docs/Skills/'}
       ]},
        {text:'openClaw',link:'/OpenClaw/'},
-      {text:'示例',link:'https://www.googo.com'}
+      {text:'示例中心',link:'/examples/'}
     ],
 
     // sidebar: [
@@ -66,6 +66,7 @@ export default defineConfig({
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
+      '/examples/': set_sidebar('/examples'),
       '/AI_Infrastructure/': [
         {
           text: '📚 LLM 基础教程',
