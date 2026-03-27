@@ -84,17 +84,23 @@ const shareToWechat = async () => {
 // 生成微信二维码
 const generateQRCode = async () => {
   if (qrCodeRef.value) {
-    // 使用 QRCode 库生成二维码
-    const QRCode = (await import('qrcode')).default
-    qrCodeRef.value.innerHTML = ''
-    QRCode.toCanvas(qrCodeRef.value, currentUrl.value, {
-      width: 200,
-      margin: 2,
-      color: {
-        dark: '#000000',
-        light: '#ffffff'
-      }
-    })
+    try {
+      // 使用 QRCode 库生成二维码
+      const QRCode = (await import('qrcode')).default
+      qrCodeRef.value.innerHTML = ''
+      QRCode.toCanvas(qrCodeRef.value, currentUrl.value, {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#ffffff'
+        }
+      })
+    } catch (error) {
+      console.error('二维码生成失败:', error)
+      // 降级方案：使用微信官方 API 生成二维码图片
+      qrCodeRef.value.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl.value)}" alt="微信分享二维码" style="width:200px;height:200px;" />`
+    }
   }
 }
 
