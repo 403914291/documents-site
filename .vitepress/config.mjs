@@ -32,13 +32,17 @@ export default defineConfig({
         {text:'AI 学习资料',link:'/AI_Infrastructure/'},
         {text:'AI 实战项目',link:'/AI_docs'},
         {text:'AI 视频教程',link:'/videos/'},
-        {text:'AI 基础',link:'/AI_basics/'}
+        {text:'AI 基础',link:'/AI_basics/'},
+        {text:'Stable Diffusion',link:'/stable-diffusion/'}
       ] },
       { text: 'Claude Code',  items:[
         {text:'Claude-Code',link:'/AI_docs/Claude-Code'},
         {text:'Skills',link:'/AI_docs/Skills/'}
       ]},
-       {text:'openClaw',link:'/OpenClaw/'},
+       { text: 'openClaw',  items:[
+        {text:'新手指南',link:'/OpenClaw/'},
+        {text:'Skills',link:'/OpenClaw/skills/'}
+      ]},
       {text:'示例中心',link:'/examples/'}
     ],
 
@@ -66,7 +70,22 @@ export default defineConfig({
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
+      '/OpenClaw/skills/': set_sidebar('/OpenClaw/skills'),
       '/examples/': set_sidebar('/examples'),
+      '/stable-diffusion/': [
+        {
+          text: '📚 Stable Diffusion 完整教程',
+          collapsed: false,
+          items: [
+            { text: '📖 教程索引', link: '/stable-diffusion/' },
+            { text: '01-入门指南', link: '/stable-diffusion/01-入门指南' },
+            { text: '02-模型选择', link: '/stable-diffusion/02-模型选择' },
+            { text: '03-提示词工程', link: '/stable-diffusion/03-提示词工程' },
+            { text: '04-图生图与修复', link: '/stable-diffusion/04-图生图' },
+            { text: '05-ControlNet 详解', link: '/stable-diffusion/05-ControlNet' }
+          ]
+        }
+      ],
       '/AI_Infrastructure/': [
         {
           text: '📚 LLM 基础教程',
