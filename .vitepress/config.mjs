@@ -71,6 +71,7 @@ export default defineConfig({
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
       '/OpenClaw/skills/': set_sidebar('/OpenClaw/skills'),
+      '/OpenClaw/skills/wechat-mp-cn/': set_sidebar('/OpenClaw/skills/wechat-mp-cn'),
       '/examples/': set_sidebar('/examples'),
       '/stable-diffusion/': [
         {
