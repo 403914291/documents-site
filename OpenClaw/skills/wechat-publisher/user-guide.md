@@ -525,7 +525,7 @@ openclaw skill buy wechat-publisher
 
 | 联系方式 | 说明 | 响应时间 |
 |----------|------|----------|
-| **微信** | 添加 `laoli_tech`（备注：技能购买） | 1 小时内 |
+| **微信** | 添加 `lylovejava`（备注：技能购买） | 1 小时内 |
 | **公众号** | 关注"小蛋蛋助手"，发送订单号 | 2 小时内 |
 | **邮箱** | support@wechat-publisher.ai | 24 小时内 |
 | **GitHub** | 提交 Issue | 24 小时内 |
