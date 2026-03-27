@@ -72,6 +72,7 @@ export default defineConfig({
       '/OpenClaw/': set_sidebar('/OpenClaw'),
       '/OpenClaw/skills/': set_sidebar('/OpenClaw/skills'),
       '/OpenClaw/skills/wechat-mp-cn/': set_sidebar('/OpenClaw/skills/wechat-mp-cn'),
+      '/OpenClaw/skills/wechat-publisher/': set_sidebar('/OpenClaw/skills/wechat-publisher'),
       '/examples/': set_sidebar('/examples'),
       '/stable-diffusion/': [
         {
