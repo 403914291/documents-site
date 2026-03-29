@@ -43,7 +43,11 @@ export default defineConfig({
         {text:'新手指南',link:'/OpenClaw/'},
         {text:'Skills',link:'/OpenClaw/skills/'}
       ]},
-      {text:'示例中心',link:'/examples/'}
+      {text:'示例中心',link:'/examples/'},
+      { text: 'Python',  items:[
+        {text:'Python 文档',link:'/python_docs/'},
+        {text:'Jinja2 学习指南',link:'/python_docs/Jinja2 学习指南'}
+      ]}
     ],
 
     // sidebar: [
