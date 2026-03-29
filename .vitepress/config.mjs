@@ -32,8 +32,7 @@ export default defineConfig({
         {text:'AI 学习资料',link:'/AI_Infrastructure/'},
         {text:'AI 实战项目',link:'/AI_docs'},
         {text:'AI 视频教程',link:'/videos/'},
-        {text:'AI 基础',link:'/AI_basics/'},
-        {text:'Stable Diffusion',link:'/stable-diffusion/'}
+        {text:'AI 基础',link:'/AI_basics/'}
       ] },
       { text: 'Claude Code',  items:[
         {text:'Claude-Code',link:'/AI_docs/Claude-Code'},
@@ -73,20 +72,6 @@ export default defineConfig({
       '/OpenClaw/skills/wechat-mp-cn/': set_sidebar('/OpenClaw/skills/wechat-mp-cn'),
       '/OpenClaw/skills/wechat-publisher/': set_sidebar('/OpenClaw/skills/wechat-publisher'),
       '/examples/': set_sidebar('/examples'),
-      '/stable-diffusion/': [
-        {
-          text: '📚 Stable Diffusion 完整教程',
-          collapsed: false,
-          items: [
-            { text: '📖 教程索引', link: '/stable-diffusion/' },
-            { text: '01-入门指南', link: '/stable-diffusion/01-入门指南' },
-            { text: '02-模型选择', link: '/stable-diffusion/02-模型选择' },
-            { text: '03-提示词工程', link: '/stable-diffusion/03-提示词工程' },
-            { text: '04-图生图与修复', link: '/stable-diffusion/04-图生图' },
-            { text: '05-ControlNet 详解', link: '/stable-diffusion/05-ControlNet' }
-          ]
-        }
-      ],
       '/AI_Infrastructure/': [
         {
           text: '📚 LLM 基础教程',
@@ -118,6 +103,18 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'AI 应用开发标准规范', link: '/AI_Infrastructure/03-标准规范/00-ai-app-development-standards' }
+          ]
+        },
+        {
+          text: '🎨 Stable Diffusion',
+          collapsed: false,
+          items: [
+            { text: '📖 教程索引', link: '/AI_Infrastructure/stable-diffusion/' },
+            { text: '01-入门指南', link: '/AI_Infrastructure/stable-diffusion/01-入门指南' },
+            { text: '02-模型选择', link: '/AI_Infrastructure/stable-diffusion/02-模型选择' },
+            { text: '03-提示词工程', link: '/AI_Infrastructure/stable-diffusion/03-提示词工程' },
+            { text: '04-图生图与修复', link: '/AI_Infrastructure/stable-diffusion/04-图生图' },
+            { text: '05-ControlNet 详解', link: '/AI_Infrastructure/stable-diffusion/05-controlnet' }
           ]
         }
       ]
