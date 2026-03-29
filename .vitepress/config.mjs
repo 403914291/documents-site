@@ -43,11 +43,7 @@ export default defineConfig({
         {text:'新手指南',link:'/OpenClaw/'},
         {text:'Skills',link:'/OpenClaw/skills/'}
       ]},
-      {text:'示例中心',link:'/examples/'},
-      { text: 'Python',  items:[
-        {text:'Python 文档',link:'/python_docs/'},
-        {text:'Jinja2 学习指南',link:'/python_docs/Jinja2 学习指南'}
-      ]}
+      {text:'示例中心',link:'/examples/'}
     ],
 
     // sidebar: [
@@ -70,7 +66,6 @@ export default defineConfig({
 
     // ],
     sidebar: {
-      "/python_docs": set_sidebar("/python_docs"),
       "/AI_docs": set_sidebar("/AI_docs"),
       '/AI_basics/': set_sidebar('/AI_basics'),
       '/OpenClaw/': set_sidebar('/OpenClaw'),
