@@ -37,6 +37,11 @@ features:
       src: /svg/llamaindex.svg
     link: /AI_Infrastructure/02-部署指南/03-LlamaIndex 全面指南
     details: RAG 数据索引框架，构建私有知识库问答系统
+  - title: 提示词工程
+    icon:
+      src: /svg/Claude.svg
+    link: /AI_Infrastructure/01-LLM 实训营/10-提示词工程完整指南
+    details: 系统学习提示词设计原则、技巧和实战应用
   - title: LLaMA Factory
     icon:
       src: /svg/llama-factory.svg
