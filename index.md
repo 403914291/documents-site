@@ -30,12 +30,12 @@ features:
   - title: VLM 视觉语言模型
     icon:
       src: /svg/lmdeploy.svg
-    link: /AI_Infrastructure/04-LMDeploy 完全指南
+    link: /AI_Infrastructure/02-部署指南/04-LMDeploy 全面指南
     details: 图文理解、图文问答等多模态 AI 技术
   - title: LlamaIndex
     icon:
       src: /svg/llamaindex.svg
-    link: /AI_Infrastructure/03-LlamaIndex 完全指南
+    link: /AI_Infrastructure/02-部署指南/03-LlamaIndex 全面指南
     details: RAG 数据索引框架，构建私有知识库问答系统
   - title: LLaMA Factory
     icon:
@@ -45,7 +45,7 @@ features:
   - title: Ollama
     icon:
       src: /svg/Ollama.svg
-    link: /AI_Infrastructure/01-Ollama 完全指南
+    link: /AI_Infrastructure/02-部署指南/01-Ollama 全面指南
     details: 本地运行大模型的最佳选择，开箱即用
 ---
 
