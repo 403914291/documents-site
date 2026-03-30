@@ -30,17 +30,17 @@ features:
   - title: VLM 视觉语言模型
     icon:
       src: /svg/lmdeploy.svg
-    link: /AI_Infrastructure/02-部署指南/04-LMDeploy 全面指南
+    link: /AI_Infrastructure/02-%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/04-LMDeploy%20%E5%85%A8%E9%9D%A2%E6%8C%87%E5%8D%97
     details: 图文理解、图文问答等多模态 AI 技术
   - title: LlamaIndex
     icon:
       src: /svg/llamaindex.svg
-    link: /AI_Infrastructure/02-部署指南/03-LlamaIndex 全面指南
+    link: /AI_Infrastructure/02-%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/03-LlamaIndex%20%E5%85%A8%E9%9D%A2%E6%8C%87%E5%8D%97
     details: RAG 数据索引框架，构建私有知识库问答系统
   - title: 提示词工程
     icon:
       src: /svg/Claude.svg
-    link: /AI_Infrastructure/01-LLM 实训营/10-提示词工程完整指南
+    link: /AI_Infrastructure/01-LLM%20%E5%AE%9E%E8%AE%AD%E8%90%A5/10-%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97
     details: 系统学习提示词设计原则、技巧和实战应用
   - title: LLaMA Factory
     icon:
@@ -50,7 +50,7 @@ features:
   - title: Ollama
     icon:
       src: /svg/Ollama.svg
-    link: /AI_Infrastructure/02-部署指南/01-Ollama 全面指南
+    link: /AI_Infrastructure/02-%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/01-Ollama%20%E5%85%A8%E9%9D%A2%E6%8C%87%E5%8D%97
     details: 本地运行大模型的最佳选择，开箱即用
 ---
 
