@@ -85,7 +85,8 @@ export default defineConfig({
             { text: '06-KV 缓存', link: '/AI_Infrastructure/01-LLM 基础教程/06-KV 缓存' },
             { text: '07-RLHF 人类反馈强化学习', link: '/AI_Infrastructure/01-LLM 基础教程/07-RLHF 人类反馈强化学习' },
             { text: '08-预训练', link: '/AI_Infrastructure/01-LLM 基础教程/08-预训练' },
-            { text: '09-微调', link: '/AI_Infrastructure/01-LLM 基础教程/09-微调' }
+            { text: '09-微调', link: '/AI_Infrastructure/01-LLM 基础教程/09-微调' },
+            { text: '10-提示词工程完整指南', link: '/AI_Infrastructure/01-LLM 基础教程/10-提示词工程完整指南' }
           ]
         },
         {
