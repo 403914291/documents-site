@@ -1,4 +1,4 @@
-# 03-LLM 环境搭建完整指南
+# LLM 环境搭建完整指南
 
 > 📚 本指南详细介绍学习和开发大语言模型（LLM）所需的环境配置，从零基础到完整开发环境，帮助你快速搭建并验证 LLM 学习环境。
 
@@ -17,9 +17,10 @@
 2. [Python 环境配置](#2-python-环境配置)
 3. [深度学习框架安装](#3-深度学习框架安装)
 4. [LLM 核心库安装](#4-llm-核心库安装)
-5. [GPU 环境配置（可选）](#5-gpu-环境配置可选)
-6. [环境验证](#6-环境验证)
-7. [常见问题排查](#7-常见问题排查)
+5. [Jupyter 从安装到使用](#5-jupyter-从安装到使用)
+6. [GPU 环境配置（可选）](#6-gpu-环境配置可选)
+7. [环境验证](#7-环境验证)
+8. [常见问题排查](#8-常见问题排查)
 
 ---
 
@@ -58,7 +59,7 @@ pip install transformers datasets accelerate peft huggingface_hub langchain jupy
 python -c "import torch; print('PyTorch:', torch.__version__)"
 ```
 
-✅ **完成！** 继续到 [环境验证](#6-环境验证) 章节
+✅ **完成！** 继续到 [环境验证](#7-环境验证) 章节
 
 ---
 
@@ -88,7 +89,7 @@ pip install transformers datasets accelerate peft huggingface_hub
 python -c "import torch; print('PyTorch:', torch.__version__)"
 ```
 
-✅ **完成！** 继续到 [环境验证](#6-环境验证) 章节
+✅ **完成！** 继续到 [环境验证](#7-环境验证) 章节
 
 ---
 
@@ -118,7 +119,7 @@ pip install langchain langchain-community llama-index
 python -c "import torch; print('CUDA 可用:', torch.cuda.is_available())"
 ```
 
-✅ **完成！** 继续到 [环境验证](#6-环境验证) 章节
+✅ **完成！** 继续到 [环境验证](#7-环境验证) 章节
 
 ---
 
@@ -248,9 +249,269 @@ print("✅ Transformers 工作正常！")
 
 ---
 
-## 5. GPU 环境配置（可选）
+## 5. Jupyter 从安装到使用
 
-### 5.1 检查 GPU 状态
+> 💡 **Jupyter Notebook** 是数据科学和机器学习最常用的交互式开发环境，支持代码、公式、图表和文字的混合编写。
+
+### 5.1 Jupyter 安装
+
+**方法一：pip 安装（推荐）**
+
+```bash
+# 激活你的虚拟环境后
+conda activate llm  # 或 source llm_env/bin/activate
+
+# 安装 JupyterLab（新一代界面）
+pip install jupyterlab
+
+# 安装 Jupyter Notebook（经典界面）
+pip install notebook
+
+# 安装 IPython 内核
+pip install ipykernel
+```
+
+**方法二：Conda 安装**
+
+```bash
+conda install -c conda-forge jupyterlab notebook
+```
+
+**验证安装：**
+
+```bash
+jupyter --version
+jupyter lab --version
+```
+
+### 5.2 启动 Jupyter
+
+**启动 JupyterLab（推荐）：**
+
+```bash
+# 在项目目录下启动
+cd your-project-folder
+jupyter lab
+```
+
+**启动 Jupyter Notebook：**
+
+```bash
+jupyter notebook
+```
+
+启动后会自动打开浏览器，访问 `http://localhost:8888`
+
+### 5.3 配置 Jupyter 支持中文显示
+
+创建配置文件避免中文乱码：
+
+```bash
+# 生成配置文件
+jupyter notebook --generate-config
+
+# 或使用 Python 命令
+python -c "from jupyter_core.paths import jupyter_config_dir; print(jupyter_config_dir())"
+```
+
+编辑配置文件 `jupyter_notebook_config.py`，添加：
+
+```python
+# 设置默认编码
+c.NotebookApp.default_encoding = 'utf-8'
+
+# 允许远程访问（可选）
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.port = 8888
+c.NotebookApp.open_browser = False
+```
+
+### 5.4 为 LLM 环境添加专用内核
+
+```bash
+# 激活你的 LLM 环境
+conda activate llm
+
+# 添加为 Jupyter 内核
+python -m ipykernel install --user --name=llm --display-name "Python (LLM)"
+
+# 验证内核
+jupyter kernelspec list
+```
+
+现在在 Jupyter 中选择 **Kernel → Change Kernel → Python (LLM)** 即可使用 LLM 环境。
+
+### 5.5 Jupyter 常用快捷键
+
+| 快捷键 | 功能 | 模式 |
+|--------|------|------|
+| `Shift+Enter` | 运行当前单元格 | 命令/编辑 |
+| `Ctrl+Enter` | 运行当前单元格（不跳转） | 命令/编辑 |
+| `Alt+Enter` | 运行并在下方插入新单元格 | 命令/编辑 |
+| `A` | 在上方插入单元格 | 命令 |
+| `B` | 在下方插入单元格 | 命令 |
+| `D,D` | 删除单元格（按两次 D） | 命令 |
+| `M` | 转为 Markdown 单元格 | 命令 |
+| `Y` | 转为代码单元格 | 命令 |
+| `Z` | 撤销删除 | 命令 |
+| `Ctrl+S` | 保存 | 命令/编辑 |
+
+### 5.6 Jupyter 实用技巧
+
+**1. 使用 Magic 命令**
+
+```python
+# 查看代码执行时间
+%timeit sum(range(1000))
+
+# 显示 matplotlib 图表
+%matplotlib inline
+
+# 运行外部 Python 文件
+%run script.py
+
+# 查看变量信息
+whos
+
+# 清除所有变量
+%reset -f
+```
+
+**2. 在 Notebook 中运行 Shell 命令**
+
+```python
+# Windows
+!dir
+!pip list
+
+# Linux/Mac
+!ls -la
+!pip freeze > requirements.txt
+```
+
+**3. 使用 Markdown 写文档**
+
+```markdown
+# 一级标题
+## 二级标题
+### 三级标题
+
+**粗体文本**
+*斜体文本*
+
+- 列表项 1
+- 列表项 2
+
+[链接文本](https://example.com)
+
+![图片描述](image.png)
+
+```python
+# 代码块
+print("Hello World")
+```
+
+$$
+E = mc^2
+$$
+```
+
+**4. 显示进度条**
+
+```python
+from tqdm.notebook import tqdm
+import time
+
+for i in tqdm(range(100), desc="处理中"):
+    time.sleep(0.01)
+```
+
+### 5.7 在 Jupyter 中加载和测试 LLM
+
+```python
+# 1. 导入必要的库
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+# 2. 检查 GPU
+print(f"CUDA 可用：{torch.cuda.is_available()}")
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+# 3. 加载模型和分词器
+model_name = "gpt2"
+print(f"正在加载 {model_name}...")
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+
+print("✅ 模型加载完成！")
+
+# 4. 文本生成函数
+def generate_text(prompt, max_length=100):
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    outputs = model.generate(**inputs, max_length=max_length)
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+# 5. 测试生成
+result = generate_text("今天天气不错，")
+print(result)
+```
+
+### 5.8 Jupyter 扩展推荐
+
+**安装扩展管理器：**
+
+```bash
+pip install jupyterlab-lsp jupyterlab-git
+```
+
+**推荐扩展：**
+
+| 扩展名 | 功能 |
+|--------|------|
+| `jupyterlab-lsp` | 代码自动补全 |
+| `jupyterlab-git` | Git 版本控制 |
+| `jupyterlab-toc` | 目录导航 |
+| `jupyterlab-drawio` | 流程图绘制 |
+| `jupyterlab-templates` | 代码模板 |
+
+### 5.9 Jupyter 常见问题
+
+**问题 1：无法打开浏览器**
+
+```bash
+# 手动复制启动时显示的 URL
+# 通常是 http://localhost:8888/?token=xxx
+```
+
+**问题 2：端口被占用**
+
+```bash
+# 使用其他端口
+jupyter lab --port=8889
+```
+
+**问题 3：内核找不到**
+
+```bash
+# 重新安装内核
+python -m ipykernel install --user --name=llm --display-name "Python (LLM)"
+```
+
+**问题 4：内存不足**
+
+```python
+# 在单元格中清理变量
+%reset -f
+import gc
+gc.collect()
+```
+
+---
+
+## 6. GPU 环境配置（可选）
+
+### 6.1 检查 GPU 状态
 
 ```bash
 # Windows/Mac/Linux
@@ -269,7 +530,7 @@ nvidia-smi
 +-------------------------------+----------------------+----------------------+
 ```
 
-### 5.2 安装 NVIDIA 驱动
+### 6.2 安装 NVIDIA 驱动
 
 **Windows：**
 1. 访问 [NVIDIA 驱动下载](https://www.nvidia.com/Download/index.aspx)
@@ -283,7 +544,7 @@ sudo apt install -y nvidia-driver-535
 sudo reboot
 ```
 
-### 5.3 显存优化技巧
+### 6.3 显存优化技巧
 
 如果遇到 `CUDA out of memory`：
 
@@ -311,9 +572,9 @@ gc.collect()
 
 ---
 
-## 6. 环境验证
+## 7. 环境验证
 
-### 6.1 运行验证脚本
+### 7.1 运行验证脚本
 
 创建 `verify_env.py`：
 
@@ -372,7 +633,7 @@ print("\n" + "=" * 50)
 python verify_env.py
 ```
 
-### 6.2 完整测试
+### 7.2 完整测试
 
 ```python
 # 测试模型加载
@@ -395,9 +656,9 @@ print(f"生成结果：{tokenizer.decode(outputs[0])}")
 
 ---
 
-## 7. 常见问题排查
+## 8. 常见问题排查
 
-### 7.1 下载速度慢
+### 8.1 下载速度慢
 
 **问题：** Hugging Face 模型下载太慢
 
@@ -414,7 +675,7 @@ $env:HF_ENDPOINT = "https://hf-mirror.com"
 huggingface-cli download meta-llama/Llama-2-7b-hf
 ```
 
-### 7.2 权限问题
+### 8.2 权限问题
 
 **问题：** `You are trying to access a gated repo`
 
@@ -435,7 +696,7 @@ huggingface-cli login
 # 访问模型页面，点击"Agree and access"
 ```
 
-### 7.3 依赖冲突
+### 8.3 依赖冲突
 
 **问题：** `pip install` 报错依赖冲突
 
@@ -455,7 +716,7 @@ pip install peft bitsandbytes
 pip check
 ```
 
-### 7.4 导入错误
+### 8.4 导入错误
 
 **问题：** `ImportError: DLL load failed`
 
@@ -470,7 +731,7 @@ pip uninstall torch torchvision torchaudio
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
-### 7.5 Jupyter 内核问题
+### 8.5 Jupyter 内核问题
 
 **问题：** Jupyter 中找不到创建的环境
 
