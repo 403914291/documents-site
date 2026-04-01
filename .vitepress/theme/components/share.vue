@@ -52,13 +52,20 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, nextTick, onMounted } from 'vue'
 import { useData } from 'vitepress'
+import QRCode from 'qrcode'
 
 const { site, page } = useData()
 const showWechatQR = ref(false)
 const showCopyToast = ref(false)
 const qrCodeRef = ref(null)
+const isClient = ref(false)
+
+// 客户端挂载后标记
+onMounted(() => {
+  isClient.value = true
+})
 
 // 获取当前页面 URL
 const currentUrl = computed(() => {
@@ -82,25 +89,48 @@ const shareToWechat = async () => {
 }
 
 // 生成微信二维码
-const generateQRCode = async () => {
+const generateQRCode = () => {
+  if (!isClient.value || !qrCodeRef.value) {
+    return
+  }
+  
+  try {
+    // 清空容器
+    qrCodeRef.value.innerHTML = ''
+    
+    // 使用 QRCode 库生成 Canvas 二维码
+    QRCode.toCanvas(qrCodeRef.value, currentUrl.value, {
+      width: 200,
+      margin: 2,
+      color: {
+        dark: '#000000',
+        light: '#ffffff'
+      },
+      errorCorrectionLevel: 'M'
+    }, (error) => {
+      if (error) {
+        console.error('二维码生成失败:', error)
+        // 降级方案：使用 img 标签 + API
+        generateQRCodeImage()
+      }
+    })
+  } catch (error) {
+    console.error('二维码生成异常:', error)
+    // 降级方案：使用 img 标签 + API
+    generateQRCodeImage()
+  }
+}
+
+// 降级方案：使用在线 API 生成二维码图片
+const generateQRCodeImage = () => {
   if (qrCodeRef.value) {
-    try {
-      // 使用 QRCode 库生成二维码
-      const QRCode = (await import('qrcode')).default
-      qrCodeRef.value.innerHTML = ''
-      QRCode.toCanvas(qrCodeRef.value, currentUrl.value, {
-        width: 200,
-        margin: 2,
-        color: {
-          dark: '#000000',
-          light: '#ffffff'
-        }
-      })
-    } catch (error) {
-      console.error('二维码生成失败:', error)
-      // 降级方案：使用微信官方 API 生成二维码图片
-      qrCodeRef.value.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl.value)}" alt="微信分享二维码" style="width:200px;height:200px;" />`
-    }
+    qrCodeRef.value.innerHTML = `
+      <img 
+        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl.value)}" 
+        alt="微信分享二维码" 
+        style="width:200px;height:200px;display:block;margin:0 auto;" 
+      />
+    `
   }
 }
 
