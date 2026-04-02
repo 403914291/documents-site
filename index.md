@@ -40,7 +40,7 @@ features:
   - title: 提示词工程
     icon:
       src: /svg/Claude.svg
-    link: /AI_Infrastructure/01-llm 实训营/10-提示词工程完整指南
+    link: /AI_Infrastructure/01-LLM 实训营/10-提示词工程完整指南
     details: 系统学习提示词设计原则、技巧和实战应用
   - title: LLaMA Factory
     icon:
