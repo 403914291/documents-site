@@ -54,8 +54,10 @@ curl http://localhost:11434/api/generate -d '{
 
 编辑 OpenClaw 配置文件：
 
-**Windows:** `%APPDATA%\openclaw\config.json`  
-**macOS/Linux:** `~/.openclaw/config.json`
+**配置文件位置：** `~/.openclaw/openclaw.json`
+
+- **Windows:** `C:\Users\<你的用户名>\.openclaw\openclaw.json`
+- **macOS/Linux:** `~/.openclaw/openclaw.json`
 
 ```json
 {
@@ -89,9 +91,11 @@ openclaw ollama status
 
 | 系统 | 路径 |
 |------|------|
-| Windows | `C:\Users\LIYONG\AppData\Roaming\openclaw\config.json` |
-| macOS | `~/Library/Application Support/openclaw/config.json` |
-| Linux | `~/.config/openclaw/config.json` |
+| Windows | `C:\Users\<你的用户名>\.openclaw\openclaw.json` |
+| macOS | `~/.openclaw/openclaw.json` |
+| Linux | `~/.openclaw/openclaw.json` |
+
+> **注意：** 配置文件统一位于 `~/.openclaw/openclaw.json`，不是 `config.json`！
 
 ### 完整配置示例
 
@@ -479,7 +483,7 @@ ollama serve
 
 1. 检查配置文件编码
 ```bash
-# 确保 config.json 是 UTF-8 编码
+# 确保 openclaw.json 是 UTF-8 编码
 ```
 
 2. 使用支持中文的模型
@@ -507,8 +511,8 @@ ollama pull qwen2.5:latest
 **推荐目录结构：**
 ```
 ~/.openclaw/
-├── config.json           # 主配置
-├── config.local.json     # 本地覆盖配置（不提交 git）
+├── openclaw.json         # 主配置
+├── openclaw.local.json   # 本地覆盖配置（不提交 git）
 ├── skills/               # 技能目录
 ├── scripts/              # 自定义脚本
 └── logs/                 # 日志目录
@@ -516,7 +520,7 @@ ollama pull qwen2.5:latest
 
 **使用本地覆盖配置：**
 ```json
-// config.local.json
+// openclaw.local.json
 {
   "llm": {
     "ollama": {
