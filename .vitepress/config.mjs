@@ -108,7 +108,8 @@ export default defineConfig({
             { text: '01-Ollama 完全指南', link: '/AI_Infrastructure/02-部署指南/01-Ollama-完全指南' },
             { text: '02-vLLM 完全指南', link: '/AI_Infrastructure/02-部署指南/02-vLLM-完全指南' },
             { text: '03-LlamaIndex 完全指南', link: '/AI_Infrastructure/02-部署指南/03-LlamaIndex-完全指南' },
-            { text: '04-LMDeploy 完全指南', link: '/AI_Infrastructure/02-部署指南/04-LMDeploy-完全指南' }
+            { text: '04-LMDeploy 完全指南', link: '/AI_Infrastructure/02-部署指南/04-LMDeploy-完全指南' },
+            { text: '05-OpenClaw 配置 Ollama', link: '/AI_Infrastructure/02-部署指南/05-OpenClaw-配置-Ollama-完全指南' }
           ]
         },
         {
