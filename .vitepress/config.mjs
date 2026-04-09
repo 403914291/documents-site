@@ -86,13 +86,6 @@ export default defineConfig({
       '/OpenClaw/skills/wechat-mp-cn/': set_sidebar('/OpenClaw/skills/wechat-mp-cn'),
       '/AI_Infrastructure/': [
         {
-          text: '🤖 Claude Code 专题',
-          collapsed: false,
-          items: [
-            { text: '📖 Claude Code 完整学习手册', link: '/AI_Infrastructure/Claude-Code/claude-code-complete-manual' }
-          ]
-        },
-        {
           text: '📚 LLM 基础教程',
           collapsed: false,
           items: [
