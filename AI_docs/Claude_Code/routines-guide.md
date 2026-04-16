@@ -103,6 +103,25 @@ Scheduled → New task → New remote task
 **核心优势：**
 > Claude Code 现在可以挂在任何能发送 HTTP 请求的地方。Datadog 告警、Sentry 异常、内部运维工具，只要能发 POST，就能一键唤醒 Claude。
 
+**触发请求示例（示意）：**
+
+每个 Routine 创建后会获得一个专属的 HTTP 端点 URL 和 Bearer Token。发送 POST 请求即可触发：
+
+```bash
+# 示意格式 - 实际 URL 和令牌在创建时获得
+curl -X POST <你的 Routine 端点 URL> \
+  -H "Authorization: Bearer <你的令牌>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "alert_title": "Database connection timeout",
+    "alert_body": "Connection pool exhausted",
+    "logs": "...",
+    "context": "Check recent commits to db-service repository"
+  }'
+```
+
+> 💡 注：实际端点 URL 格式在创建 Routine 时获得，以上为示意格式。
+
 **告警响应示例流程：**
 ```
 1. 监控系统检测到异常
@@ -195,7 +214,7 @@ Scheduled → New task → New remote task
 
 点击 **"Create"** 保存 Routine。
 
-> 💡 提示：创建完成后，可以手动触发一次测试，查看执行效果。
+> 💡 提示：创建完成后，可以等待首次自动触发，或查看官方文档是否支持手动测试。
 
 ---
 
