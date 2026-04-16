@@ -2,13 +2,24 @@
 
 > **发布时间**：2026 年 4 月 16 日  
 > **作者**：小蛋蛋 🦞  
-> **标签**：`#ClaudeCode` `#AI 自动化` `#开发者工具`
+> **标签**：`#ClaudeCode` `#AI 自动化` `#开发者工具`  
+> **来源**：基于 Anthropic 官方公告及微信公号「AI 信息 Gap」报道
 
 ---
 
 ## 📰 今日摘要
 
-2026 年 4 月 16 日，Anthropic 正式官宣 **Claude Code Routines**（研究预览版），这是 Claude Code 的里程碑式更新。从此，你的 AI 编程助手不再只是被动响应，而是可以**主动工作**——在你睡觉时自动修复 bug、审核 PR、响应告警。本文深度解析 Routines 的三种触发方式，并提供完整的实战配置教程。
+**2026 年 4 月 16 日，Anthropic 正式官宣 Claude Code Routines（研究预览版）**。这是 Claude Code 的里程碑式更新——从此，你的 AI 编程助手不再只是被动响应，而是可以**主动工作**。
+
+**想象一下：**
+> 凌晨 2 点，你的 AI 助手自动启动，挑一个最高优先级的 bug，改完提交 PR。  
+> 早上醒来，修改方案已经在 PR 列表里等你审核。
+
+**这就是 Routines 带来的变革。**
+
+本文基于 Anthropic 官方公告和早期用户实践，深度解析 Routines 的三种触发方式，并提供完整的实战配置教程。
+
+> 💡 **提示**：Routines 目前处于研究预览版，具体命令格式和功能细节可能随官方更新而变化。本文重点讲解功能原理和使用场景，具体操作请以 [官方文档](https://claude.ai/code/routines) 为准。
 
 ---
 
@@ -38,6 +49,8 @@
 
 ## 🔧 三种触发方式详解
 
+> 💡 **提示**：具体命令格式可能随官方更新而变化，请以 [官方文档](https://claude.ai/code/routines) 为准。本文重点讲解功能原理和使用场景。
+
 ### 1️⃣ 时间触发（Scheduled）
 
 最直观的触发方式，适合定期执行的任务。
@@ -46,18 +59,29 @@
 - 每小时（hourly）
 - 每天（daily）
 - 每周（weekly）
-- 自定义 cron 表达式
+
+> ⚠️ 注：是否支持自定义 cron 表达式，请以官方文档为准。
 
 **典型场景：**
-- 每晚扫描新 issue，打标签 + 分派责任人
-- 每周检查合入的 PR，更新文档
-- 每小时检查依赖安全漏洞
+- 📋 每晚扫描新 issue，打标签 + 分派责任人
+- 📝 每周检查合入的 PR，把改了接口但文档没更新的挑出来
+- 🔒 每小时检查依赖安全漏洞
 
-**配置示例：**
+**创建方式：**
 ```bash
-# 在 Claude Code 终端中
-/schedule --time "every day at 2am" \
-  --prompt "检查仓库中的新 issue，按优先级打标签，并生成总结报告"
+# 方式 1：终端命令
+/schedule
+
+# 方式 2：桌面客户端
+Scheduled → New task → New remote task
+
+# 方式 3：网页端
+访问 claude.ai/code/routines → Create routine
+```
+
+**提示词示例：**
+```
+检查仓库中的新 issue，按优先级打标签，并生成总结报告发到群里
 ```
 
 ---
@@ -67,33 +91,27 @@
 这是本次**最大的更新**，让 Claude Code 可以集成到任何工作流中。
 
 **工作原理：**
-1. 每个 Routine 获得独立的 **HTTP 端点** 和 **Bearer Token**
+1. 每个 Routine 获得独立的 **HTTP 端点** 和 **凭证令牌（Bearer Token）**
 2. 发送 POST 请求到端点，触发任务执行
-3. 返回会话 URL，浏览器打开可实时查看进度
+3. 返回会话 URL，浏览器打开可实时查看 Claude 的干活进度
 
 **典型场景：**
-- 🚨 **告警响应**：Datadog/Sentry 告警 → POST 到 Routine → Claude 分析日志 → 生成修复 PR
+- 🚨 **告警响应**：监控系统把告警数据 POST 过来，Claude 读日志和最近提交，生成修复 PR
 - 📦 **部署后检查**：CI/CD 完成 → POST 触发 → Claude 执行冒烟测试
-- 🔍 **代码审查**：内部工具 → POST 触发 → Claude 审查代码并生成报告
+- 🔍 **代码审查**：内部运维工具 → POST 触发 → Claude 审查代码并生成报告
 
-**配置示例：**
-```bash
-# 创建 API 触发的 Routine
-/schedule --trigger api \
-  --prompt "分析告警数据，检查最近提交，生成修复方案"
+**核心优势：**
+> Claude Code 现在可以挂在任何能发送 HTTP 请求的地方。Datadog 告警、Sentry 异常、内部运维工具，只要能发 POST，就能一键唤醒 Claude。
+
+**告警响应示例流程：**
 ```
-
-**触发请求示例：**
-```bash
-curl -X POST https://api.claude.ai/routines/abc123/trigger \
-  -H "Authorization: Bearer sk_routine_xxx" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "alert_title": "Database connection timeout",
-    "alert_body": "Connection pool exhausted at 2026-04-16 02:30:00",
-    "logs": "...",
-    "context": "Check recent commits to db-service repository"
-  }'
+1. 监控系统检测到异常
+2. 发送 POST 请求到 Routine 的 HTTP 端点
+   - 告警标题、正文
+   - 日志片段
+   - 额外上下文（如仓库名、分支）
+3. Claude 自动分析并生成修复 PR
+4. 你早上醒来，修复方案已经在 PR 列表里等你审核
 ```
 
 ---
@@ -103,74 +121,96 @@ curl -X POST https://api.claude.ai/routines/abc123/trigger \
 安装 Claude GitHub App，订阅仓库事件，实现**事件驱动自动化**。
 
 **支持的事件类型：**
-- PR 打开/更新/合并
-- Issue 创建/评论
-- 代码推送（push）
-- CI/CD 状态变更
+- 🐙 PR 打开/更新/合并
+- 📝 Issue 创建/评论
+- 💻 代码推送（push）
+- 🔄 CI/CD 状态变更
 
-**过滤条件：**
-- 目标分支
-- 源分支
+**过滤条件（可组合使用）：**
+- 目标分支（target branch）
+- 源分支（source branch）
 - 标签（labels）
-- 作者
+- 作者（author）
 - 是否草稿 PR
 - 是否来自 Fork 仓库
 
 **典型场景：**
-- 🔒 **安全审查**：只有修改 `auth-provider` 模块的 PR 才触发安全检查清单
-- 📝 **文档检查**：接口变更但文档未更新时，自动创建文档 PR
+- 🔒 **安全审查**：只有碰到 `auth-provider` 模块的 PR，才运行一遍安全清单，逐行评论
+- 📝 **文档检查**：接口变更但文档没更新时，自动开一批 PR 等待审核
 - 🧪 **自动测试**：新 PR 提交后自动运行测试并评论结果
 
-**配置示例：**
-```bash
-# 创建 GitHub 事件触发的 Routine
-/schedule --trigger github \
-  --repo "your-org/your-repo" \
-  --event "pull_request.opened" \
-  --filter "target_branch:main,label:needs-review" \
-  --prompt "审查 PR 代码，检查是否符合安全规范，生成评论"
-```
+**事件驱动的优势：**
+> 每个事件一个独立会话。同一 PR 后续的评论、CI 失败，都会回到同一个会话里继续跟进。
 
 ---
 
-## 🎬 实战：配置你的第一个 Routine
+## 🎬 5 分钟快速入门：配置你的第一个 Routine
 
 ### 场景：自动 Bug 修复助手
 
 **目标**：每晚 2 点自动扫描仓库，修复最高优先级的 bug。
 
-**步骤 1：创建 Routine**
-```bash
-# 方式 A：终端命令
-/schedule --time "every day at 2am" \
-  --repo "your-org/your-repo" \
-  --prompt "扫描仓库中的 issue，找到优先级最高的 bug，分析原因并生成修复 PR"
+---
 
-# 方式 B：桌面客户端
-Scheduled → New task → New remote task
+### 步骤 1：访问创建页面
 
-# 方式 C：网页端
-访问 claude.ai/code/routines → Create routine
+打开浏览器，访问：[claude.ai/code/routines](https://claude.ai/code/routines)
+
+点击 **"Create routine"** 按钮。
+
+---
+
+### 步骤 2：配置触发方式
+
+选择 **时间触发（Scheduled）**，设置：
+- **频率**：每天（daily）
+- **时间**：凌晨 2:00
+
+---
+
+### 步骤 3：编写提示词
+
+在提示词框中输入：
+```
+扫描仓库中的 issue，找到优先级最高的 bug，分析原因并生成修复 PR
 ```
 
-**步骤 2：配置权限**
-```bash
-# 确保 Claude 有以下权限
-- 仓库读取权限
-- PR 创建权限
-- 环境变量访问（如需要）
-```
+**提示词技巧**：
+- ✅ 明确任务目标（扫描 issue、修复 bug）
+- ✅ 指定优先级标准（最高优先级）
+- ✅ 定义输出格式（生成修复 PR）
 
-**步骤 3：测试运行**
-```bash
-# 手动触发一次测试
-/schedule --run-now "routine-name"
-```
+---
 
-**步骤 4：监控结果**
-- 查看生成的 PR
-- 检查会话日志
-- 调整提示词优化效果
+### 步骤 4：配置仓库权限
+
+确保 Claude 有以下权限：
+- 🔑 仓库读取权限
+- 🔑 PR 创建权限
+- 🔑 环境变量访问（如需要）
+
+---
+
+### 步骤 5：保存并测试
+
+点击 **"Create"** 保存 Routine。
+
+> 💡 提示：创建完成后，可以手动触发一次测试，查看执行效果。
+
+---
+
+### 步骤 6：监控结果
+
+- 📊 查看生成的 PR
+- 📝 检查会话日志
+- 🔄 根据效果调整提示词
+
+---
+
+### 预期效果
+
+> 凌晨 2 点，Routine 自动启动，扫描 issue，分析 bug，生成修复 PR。  
+> 早上醒来，修复方案已经在 PR 列表里等你审核。
 
 ---
 
@@ -247,16 +287,28 @@ jobs:
 一个 Routine 可以配置**多个触发器**，实现全方位覆盖。
 
 **示例：PR 审查 Routine**
-```bash
-# 触发器 1：GitHub PR 事件
---trigger github --event "pull_request.opened"
 
-# 触发器 2：每天晚 10 点检查未合并 PR
---trigger time --schedule "0 22 * * *"
+三种触发方式可以合起来用。举个例子，你新建了一个 PR Review Routine，同时设置三个触发器：
 
-# 触发器 3：部署完成后 API 触发
---trigger api --endpoint "/post-deploy-check"
-```
+1. **GitHub 事件触发**：GitHub 上有新 PR，Claude 就自动运行
+2. **时间触发**：每天晚上 10 点，把当天所有未合并的 PR 检查一遍
+3. **API 触发**：部署脚本跑完后 POST 一下端点，Claude 再做一轮冒烟测试
+
+一个 Routine，三种触发方式，全天覆盖。
+
+---
+
+### 早期用户的真实使用场景
+
+Anthropic 官方分享了几个早期用户的使用场景：
+
+| 场景 | 频率 | 任务描述 |
+|------|------|---------|
+| 📋 Issue 处理 | 每晚 | 扫一遍新 issue，打标签、分派责任人、写一份总结发到群里 |
+| 📝 文档检查 | 每周 | 检查合入的 PR，把改了接口但文档没更新的挑出来，开一批 PR 等待审核 |
+| 🔄 SDK 迁移 | 实时 | 每个 Python SDK 合并 PR，自动在 Go SDK 里做等价迁移，然后打开 PR |
+
+> 💡 这些案例在 Mitchell Hashimoto 的博客里几乎都出现过。他自己在 Ghostty 项目里维护一个 AGENTS.md，配置一堆截图、测试、验证脚本，手搓了一套让 Agent 稳定干活的环境。Routines 把这些直接搬到了云端，开箱即用。
 
 ### 提示词优化技巧
 
@@ -264,6 +316,7 @@ jobs:
 ```
 检查一下这个 PR 有没有问题
 ```
+> 问题：太模糊，AI 不知道检查什么、怎么输出
 
 **✅ 优秀的提示词：**
 ```
@@ -274,6 +327,9 @@ jobs:
 4. 检查性能问题（循环嵌套、数据库查询）
 5. 生成详细的审查评论，包含具体行号和改进建议
 ```
+> 优势：任务明确、检查项清晰、输出格式具体
+
+---
 
 ### 限额与成本
 
@@ -291,28 +347,66 @@ jobs:
 
 ---
 
-## 🔍 与竞品对比
+## ⚠️ 风险与注意事项
 
-| 功能 | Claude Code Routines | GitHub Copilot | Cursor |
-|------|---------------------|----------------|--------|
-| 时间触发 | ✅ | ❌ | ❌ |
-| API 触发 | ✅ | ❌ | ❌ |
-| GitHub 事件 | ✅ | ✅（Actions） | ❌ |
-| 云端运行 | ✅ | ✅ | ❌ |
-| 独立会话 | ✅ | ❌ | ❌ |
-| 实时追踪 | ✅ | ❌ | ❌ |
-| 国内访问 | ⚠️ 需代理 | ⚠️ 需代理 | ⚠️ 需代理 |
+在使用 Routines 之前，请务必了解以下风险：
 
-**结论：** Claude Code Routines 在**自动化触发方式**和**云端持久化**方面领先竞品。
+### 🔒 权限风险
+
+> Routines 走的是全自动云端会话，**不会弹权限确认**。它能看到的仓库、分支、MCP 连接器、环境变量，默认不经你审批就能用。
+
+**建议：**
+- 仔细配置仓库权限，只授予必要的访问范围
+- 敏感环境变量不要对 Routine 开放
+- 定期审查 Routine 的执行日志
+
+### 👤 责任风险
+
+> **Claude 做的所有事情都以你的身份出现。Claude 替你加班，锅也得你来背。**
+
+**建议：**
+- 重要操作（如合并 PR、部署）设置人工审核环节
+- 定期审查 Routine 生成的 PR 和评论
+- 不要在提示词中授权危险操作（如删除分支、强制推送）
+
+### 💰 成本风险
+
+- Routines 任务运行会**正常消耗订阅额度**
+- 配置不当可能导致频繁触发，消耗过快
+
+**建议：**
+- 设置合理的触发条件，避免不必要的执行
+- 定期查看使用量统计
+- 根据实际需求选择合适的订阅档位
+
+---
+
+## 🔍 Routines 的独特优势
+
+与其他 AI 编程助手相比，Claude Code Routines 在**自动化触发方式**和**云端持久化**方面有独特优势：
+
+- **三种触发方式**：时间、API、GitHub 事件，可以单独使用，也可以组合
+- **云端运行**：关电脑也能执行，无需本地值守
+- **独立会话**：每个 Routine 运行在独立会话中，状态保持
+- **实时追踪**：通过会话 URL 实时查看执行进度
+
+> 💡 事件驱动是本次最大的亮点。以前你需要手动触发或定时轮询，现在可以真正做到了"事件发生 → 自动响应"。
 
 ---
 
 ## 📚 参考资源
 
-- [官方文档](https://claude.ai/code/routines)
+### 官方资源
+- [Claude Code Routines 官方文档](https://claude.ai/code/routines)
 - [Anthropic 官方博客](https://www.anthropic.com/news/claude-code-routines)
+
+### 社区实践
 - [Mitchell Hashimoto 的 AI Agent 实践](https://mitchellh.com/writing)
-- [GitHub App 配置指南](https://docs.github.com/en/apps)
+- [GitHub App 开发文档](https://docs.github.com/en/apps)
+
+### 延伸阅读
+- 《AI 信息 Gap》公众号：更多 AI 工具实战教程
+- documents-site 资料库：Claude Code 系列文档
 
 ---
 
