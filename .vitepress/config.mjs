@@ -121,7 +121,7 @@ export default defineConfig({
         },
         {
           text: '🎨 Stable Diffusion',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: '📖 教程索引', link: '/AI_Infrastructure/stable-diffusion/' },
             { text: '01-入门指南', link: '/AI_Infrastructure/stable-diffusion/01-入门指南' },
@@ -129,6 +129,21 @@ export default defineConfig({
             { text: '03-提示词工程', link: '/AI_Infrastructure/stable-diffusion/03-提示词工程' },
             { text: '04-图生图与修复', link: '/AI_Infrastructure/stable-diffusion/04-图生图' },
             { text: '05-ControlNet 详解', link: '/AI_Infrastructure/stable-diffusion/05-controlnet' }
+          ]
+        },
+        {
+          text: '📊 向量数据库',
+          collapsed: false,
+          items: [
+            {
+              text: 'Milvus',
+              items: [
+                { text: '01-Milvus 向量数据库入门', link: '/AI_Infrastructure/10-向量数据库/Milvus/01-Milvus 向量数据库入门' },
+                { text: '02-Milvus 核心概念', link: '/AI_Infrastructure/10-向量数据库/Milvus/02-Milvus 核心概念' },
+                { text: '03-PyMilvus 核心 API 实战', link: '/AI_Infrastructure/10-向量数据库/Milvus/03-PyMilvus 核心 API 实战' },
+                { text: '04-Docker 从入门到掌握', link: '/AI_Infrastructure/10-向量数据库/Milvus/04-Docker 从入门到掌握' }
+              ]
+            }
           ]
         }
       ]
