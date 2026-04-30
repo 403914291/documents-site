@@ -132,18 +132,13 @@ export default defineConfig({
           ]
         },
         {
-          text: '📊 向量数据库',
+          text: '📊 Milvus',
           collapsed: false,
           items: [
-            {
-              text: 'Milvus',
-              items: [
-                { text: '01-Milvus 向量数据库入门', link: '/AI_Infrastructure/10-向量数据库/Milvus/01-Milvus 向量数据库入门' },
-                { text: '02-Milvus 核心概念', link: '/AI_Infrastructure/10-向量数据库/Milvus/02-Milvus 核心概念' },
-                { text: '03-PyMilvus 核心 API 实战', link: '/AI_Infrastructure/10-向量数据库/Milvus/03-PyMilvus 核心 API 实战' },
-                { text: '04-Docker 从入门到掌握', link: '/AI_Infrastructure/10-向量数据库/Milvus/04-Docker 从入门到掌握' }
-              ]
-            }
+            { text: '01-Milvus向量数据库入门', link: '/AI_Infrastructure/10-数据库/Milvus/01-Milvus向量数据库入门' },
+            { text: '02-Milvus核心概念', link: '/AI_Infrastructure/10-数据库/Milvus/02-Milvus核心概念' },
+            { text: '03-PyMilvus核心API实战', link: '/AI_Infrastructure/10-数据库/Milvus/03-PyMilvus核心API实战' },
+            { text: '04-Docker从入门到掌握', link: '/AI_Infrastructure/10-数据库/Milvus/04-Docker从入门到掌握' }
           ]
         }
       ]
